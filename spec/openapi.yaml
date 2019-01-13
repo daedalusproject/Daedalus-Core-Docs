@@ -24,5 +24,9 @@ externalDocs:
 tags:
   - name: Ping
     description: Checks if service is working
+  - name: Login
+    description: User login
+  - name: ImAdmin
+    description: User imadmin
 servers:
   - url: 'https://api-dev.daedalus-project.io'
