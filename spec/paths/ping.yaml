@@ -1,0 +1,19 @@
+get:
+  tags:
+    - Ping
+  summary: Ping
+  description: Checks if service is working
+  operationId: ping
+  responses:
+    '200':
+      description: If API is working it returns "pong"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+          examples:
+            '0':
+              value: '{"status":"pong"}'
