@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Daedalus-Core
+  contact:
+    email: acastellano@daedalus-project.io
+    url: 'https://daedalus-project.io/contact'
+  license:
+    name: GNU General Public License 3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+  x-logo:
+    url: 'https://apis.guru/openapi-template/logo.png'
+  description: >
+    This is the Daedalus Poject Core API specification.
+
+    # Introduction
+
+    This specification is intended to to be a good starting point for describing
+    this API, offering developers examples for working with it.
+
+    # OpenAPI Specification
+
+    The goal of The OpenAPI Specification is to define a standard,
+    language-agnostic interface to REST APIs which
+
+    allows both humans and computers to discover and understand the capabilities
+    of the service without access to source
+
+    code, documentation, or through network traffic inspection. When properly
+    defined via OpenAPI, a consumer can 
+
+    understand and interact with the remote service with a minimal amount of
+    implementation logic. Similar to what
+
+    interfaces have done for lower-level programming, OpenAPI removes the
+    guesswork in calling the service.
+externalDocs:
+  description: Daedalus Project Docs
+  url: 'https://readthedocs.org'
+tags:
+  - name: Ping
+    description: Checks if service is working
+servers:
+  - url: 'https://api-dev.daedalus-project.io'
