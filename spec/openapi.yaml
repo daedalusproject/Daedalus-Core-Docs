@@ -34,6 +34,8 @@ tags:
     description: Confirm user registration
   - name: ShowActive
     description: Show Active Users
+  - name: ShowInactive
+    description: Show Inactive Users
 
 servers:
   - url: 'https://api-dev.daedalus-project.io'
