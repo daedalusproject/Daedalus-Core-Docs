@@ -36,6 +36,8 @@ tags:
     description: Show Active Users
   - name: ShowInactive
     description: Show Inactive Users
+  - name: ShowRegistered
+    description: Show Registered Users
 
 servers:
   - url: 'https://api-dev.daedalus-project.io'
