@@ -1,0 +1,69 @@
+get:
+  tags:
+    - ShowActive
+  summary: Show Active Users
+  description: Admin users are allowed to see its active registered users
+  security:
+    - token_security: []
+  responses:
+    '200':
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              status:
+                type: integer
+                enum:
+                  - 1
+              data:
+                type: object
+                required:
+                  - active_users
+                properties:
+                  active_users:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - is_admin
+                        - surname
+                        - name
+                        - email
+                      properties:
+                        is_admin:
+                          type: integer
+                        surname:
+                          type: string
+                        name:
+                          type: string
+                        active:
+                          type: integer
+                        email:
+                          type: string
+    '403':
+      description: I said only andmins
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - status
+            properties:
+              message:
+                type: string
+                enum:
+                  - "You are not an admin user."
+              status:
+                type: integer
+                enum:
+                  - 0
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "You are not an admin user."
