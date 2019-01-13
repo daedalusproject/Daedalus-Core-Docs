@@ -28,5 +28,10 @@ tags:
     description: User login
   - name: ImAdmin
     description: User imadmin
+  - name: Register
+    description: User register
+  - name: Confirm
+    description: Confirm user registration
+
 servers:
   - url: 'https://api-dev.daedalus-project.io'
