@@ -17,95 +17,144 @@ info:
 externalDocs:
   description: Daedalus Project Docs
   url: 'https://readthedocs.org'
-tags:
-  - name: Ping
-    description: Checks if service is working
-  - name: Login
-    description: User login
-  - name: ImAdmin
-    description: User imadmin
-  - name: Register
-    description: User register
-  - name: Confirm
-    description: Confirm user registration
-  - name: ShowActive
-    description: Show Active Users
-  - name: ShowInactive
-    description: Show Inactive Users
-  - name: ShowRegistered
-    description: Show Registered Users
-  - name: ShowOrphan
-    description: Show Orphan Users
 servers:
   - url: 'https://api-dev.daedalus-project.io'
 paths:
-  /echo:
+  /organization/create:
     post:
       tags:
-        - Echo
-      summary: Echo test
-      description: Receive the exact message you've sent
-      operationId: echo
-      responses:
-        '200':
-          description: OK
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              $ref: '#/components/headers/ExpiresAfter'
-          content:
-            application/json:
-              schema:
-                type: string
-              examples:
-                response:
-                  value: Hello world!
-            application/xml:
-              schema:
-                type: string
-            text/csv:
-              schema:
-                type: string
+        - Organization
+      summary: Create organiation
+      description: Admin users are allowed to create organizations
+      security:
+        - token_security: []
       requestBody:
         content:
           application/json:
             schema:
-              type: string
-              example: Hello world!
-          application/xml:
-            schema:
-              type: string
-              example: Hello world!
-        description: Echo payload
-        required: true
-      x-code-samples:
-        - lang: 'C#'
-          source: |
-            API.v1.Echo echo = new API.v1.Echo();
-            echo.message = "Hello World!");
-            EchoResponse response = echo.post();
-            if (response.statusCode == HttpStatusCode.Created)
-            {
-              // Success
-            }
-            else
-            {
-              // Something wrong -- check response for errors
-              Console.WriteLine(response.getRawResponse());
-            }
-        - lang: PHP
-          source: |
-            $form = new \API\Entities\Echo();
-            $form->setMessage("Hello World!");
-            try {
-                $pet = $client->echo()->post($form);
-            } catch (UnprocessableEntityException $e) {
-                var_dump($e->getErrors());
-            }
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+            examples:
+              '0':
+                value:
+                  organization_data:
+                    name: Mega Shops
+              '1':
+                value:
+                  organization_data:
+                    name: Daedalus Project
+              '2':
+                value:
+                  organization_data: null
+      responses:
+        '200':
+          description: 'Sucess responses, superadmin also receives _hidden_data'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - data
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - oganization
+                    properties:
+                      organization:
+                        type: object
+                        required:
+                          - organization_token
+                        properties:
+                          organization_token:
+                            type: string
+                  _hidden_data:
+                    type: object
+                    properties:
+                      organization:
+                        type: object
+                        properties:
+                          organization_id:
+                            type: string
+                      user:
+                        type: object
+                        properties:
+                          is_super_admin:
+                            type: integer
+                          id:
+                            type: integer
+                  message:
+                    type: string
+                  status:
+                    type: integer
+                    enum:
+                      - 1
+              examples:
+                '0':
+                  value:
+                    status: 1
+                    message: Organization created.
+                    data:
+                      organization:
+                        organization_token: s.Q8Ymu8q/yqAgZtdAnxyN4Exrwldp0S
+                    _hidden_data:
+                      organization:
+                        organization_id: '2}'
+                      user:
+                        is_super_admin: 1
+                        id: 1
+        '400':
+          description: Invalid data.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Duplicated organization name.
+                '1':
+                  value:
+                    status: 0
+                    message: Invalid organization data.
+        '403':
+          description: Non admin users are not allowed to create organizations
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - You are not an admin user.
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: You are not an admin user.
   /ping:
     get:
       tags:
@@ -129,7 +178,7 @@ paths:
   /user/confirm:
     post:
       tags:
-        - Confirm
+        - User
       summary: Confirm User Registration
       description: Registered users must activate their account.
       requestBody:
@@ -222,8 +271,8 @@ paths:
   /user/imadmin:
     get:
       tags:
-        - ImAdmin
-      summary: User ImAdmin
+        - User
+      summary: User Imadmin
       description: Returns if user is admin
       security:
         - token_security: []
@@ -297,7 +346,7 @@ paths:
   /user/login:
     post:
       tags:
-        - Login
+        - User
       summary: User Login
       description: Users are allowed to log in into Daedalus Core
       requestBody:
@@ -474,7 +523,7 @@ paths:
   /user/register:
     post:
       tags:
-        - Register
+        - User
       summary: User Register
       description: Admin users are allowed to register new users
       security:
@@ -615,7 +664,7 @@ paths:
   /user/showactive:
     get:
       tags:
-        - ShowActive
+        - User
       summary: Show Active Users
       description: Admin users are allowed to see its active registered users
       security:
@@ -685,7 +734,7 @@ paths:
   /user/showinactive:
     get:
       tags:
-        - ShowInactive
+        - User
       summary: Show Inactive Users
       description: Admin users are allowed its registered user who has not activated their accounts
       security:
@@ -796,7 +845,7 @@ paths:
   /user/showorphan:
     get:
       tags:
-        - ShowRegistered
+        - User
       summary: Show Registered Users
       description: Admin users are allowed to see registers users without any organization
       security:
@@ -904,7 +953,7 @@ paths:
   /user/showregistered:
     get:
       tags:
-        - ShowRegistered
+        - User
       summary: Show Registered Users
       description: Admin users are allowed to see their registered users.
       security:
@@ -1033,77 +1082,6 @@ paths:
                   value:
                     status: 0
                     message: You are not an admin user.
-  '/users/{username}':
-    parameters:
-      - name: pretty_print
-        in: query
-        description: Pretty print response
-        schema:
-          type: boolean
-    get:
-      tags:
-        - User
-      summary: Get user by user name
-      description: |
-        Some description of the operation. 
-        You can use `markdown` here.
-      operationId: getUserByName
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          schema:
-            type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          schema:
-            type: boolean
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              example:
-                username: user1
-                email: user@example.com
-        '403':
-          description: Forbidden
-        '404':
-          description: User not found
-    put:
-      tags:
-        - User
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be updated
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-        '400':
-          description: Invalid user supplied
-        '404':
-          description: User not found
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-        description: Updated user object
-        required: true
 components:
   schemas:
     Email:
