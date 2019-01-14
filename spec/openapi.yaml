@@ -21,25 +21,6 @@ info:
 externalDocs:
   description: Daedalus Project Docs
   url: 'https://readthedocs.org'
-tags:
-  - name: Ping
-    description: Checks if service is working
-  - name: Login
-    description: User login
-  - name: ImAdmin
-    description: User imadmin
-  - name: Register
-    description: User register
-  - name: Confirm
-    description: Confirm user registration
-  - name: ShowActive
-    description: Show Active Users
-  - name: ShowInactive
-    description: Show Inactive Users
-  - name: ShowRegistered
-    description: Show Registered Users
-  - name: ShowOrphan
-    description: Show Orphan Users
 
 servers:
   - url: 'https://api-dev.daedalus-project.io'

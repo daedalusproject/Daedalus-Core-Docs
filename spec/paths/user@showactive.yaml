@@ -1,6 +1,6 @@
 get:
   tags:
-    - ShowActive
+    - User
   summary: Show Active Users
   description: Admin users are allowed to see its active registered users
   security:

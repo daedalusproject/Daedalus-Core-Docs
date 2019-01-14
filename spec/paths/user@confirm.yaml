@@ -1,6 +1,6 @@
 post:
   tags:
-    - Confirm
+    - User
   summary: Confirm User Registration
   description: Registered users must activate their account.
   requestBody:

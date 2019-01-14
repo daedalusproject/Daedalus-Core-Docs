@@ -1,6 +1,6 @@
 post:
   tags:
-    - Login
+    - User
   summary: User Login
   description: Users are allowed to log in into Daedalus Core
   requestBody:
