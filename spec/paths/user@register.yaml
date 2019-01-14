@@ -1,6 +1,6 @@
 post:
   tags:
-    - Register
+    - User
   summary: User Register
   description: Admin users are allowed to register new users
   security:

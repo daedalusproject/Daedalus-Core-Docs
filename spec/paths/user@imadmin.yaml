@@ -1,7 +1,7 @@
 get:
   tags:
-    - ImAdmin
-  summary: User ImAdmin
+    - User
+  summary: User Imadmin
   description: Returns if user is admin
   security:
     - token_security: []

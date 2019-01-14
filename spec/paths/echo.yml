@@ -40,3 +40,4 @@ post:
           example: Hello world!
     description: Echo payload
     required: true
+

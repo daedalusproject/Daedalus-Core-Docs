@@ -1,6 +1,6 @@
 get:
   tags:
-    - ShowRegistered
+    - User
   summary: Show Registered Users
   description: Admin users are allowed to see their registered users.
   security:

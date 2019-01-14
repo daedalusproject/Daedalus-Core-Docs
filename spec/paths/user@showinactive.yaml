@@ -1,6 +1,6 @@
 get:
   tags:
-    - ShowInactive
+    - User
   summary: Show Inactive Users
   description: Admin users are allowed its registered user who has not activated their accounts
   security:
