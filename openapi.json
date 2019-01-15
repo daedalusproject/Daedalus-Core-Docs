@@ -26,6 +26,230 @@
     }
   ],
   "paths": {
+    "/organization/addroletogroup": {
+      "post": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Add roles to organizations groups",
+        "description": "Admin users are allowed to add roles to its organizations groups",
+        "security": [
+          {
+            "token_security": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_name": {
+                    "type": "string"
+                  },
+                  "group_name": {
+                    "type": "string"
+                  },
+                  "organization_token": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
+                  }
+                },
+                "1": {
+                  "value": {
+                    "organization_token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn",
+                    "group_name": "non existent group"
+                  }
+                },
+                "2": {
+                  "value": {
+                    "organization_token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn",
+                    "group_name": "non existent group",
+                    "role_name": "firemen"
+                  }
+                },
+                "3": {
+                  "value": {
+                    "organization_token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn",
+                    "group_name": "Daedalus Core Sysadmins",
+                    "role_name": "firemen"
+                  }
+                },
+                "4": {
+                  "value": {
+                    "organization_token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn",
+                    "group_name": "Daedalus Core Sysadmins",
+                    "role_name": "fireman"
+                  }
+                },
+                "5": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                    "group_name": "Megashops Sysadmins",
+                    "role_name": "fireman"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_hidden_data": {
+                      "type": "object",
+                      "properties": {
+                        "organization_group_role": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "is_super_admin": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "message": "Selected role has been added to organization group.",
+                      "_hidden_data": {
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": 1
+                        },
+                        "organization_group_role": {
+                          "id": 6
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid requests, if user does not belong to required organization API response has 400 code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "No organization_token provided."
+                    }
+                  },
+                  "1": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  },
+                  "2": {
+                    "value": {
+                      "status": 0,
+                      "message": "No group_name provided. No role_name provided."
+                    }
+                  },
+                  "3": {
+                    "value": {
+                      "status": 0,
+                      "message": "No role_name provided."
+                    }
+                  },
+                  "4": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required group does not exist."
+                    }
+                  },
+                  "5": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required role does not exist."
+                    }
+                  },
+                  "6": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required role is already assigned to this group."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non admin requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Your organization roles does not match with the following roles: organization master."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/organization/adduser": {
       "post": {
         "tags": [
@@ -235,6 +459,234 @@
                     "value": {
                       "status": 0,
                       "message": "You are not a organization master of this organization."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organization/addusertogroup": {
+      "post": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Add users to organizations groups",
+        "description": "Admin users are allowed to add users to its organizations groups",
+        "security": [
+          {
+            "token_security": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_email": {
+                    "type": "string"
+                  },
+                  "group_name": {
+                    "type": "string"
+                  },
+                  "organization_token": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "0": {
+                  "value": {
+                    "organization_token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
+                  }
+                },
+                "1": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                    "group_name": "Invalid group name",
+                    "user_email": "invaliduser@email.com"
+                  }
+                },
+                "2": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                    "group_name": "Invalid group name",
+                    "user_email": "invaliduseremail.com"
+                  }
+                },
+                "3": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                    "group_name": "Invalid group name",
+                    "user_email": "alvaro.castellano.vela@gmail.com"
+                  }
+                },
+                "4": {
+                  "value": "organization_token: \"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\" group_name: \"Daedalus Core Sysadmins\" user_email: \"alvaro.castellano.vela@gmail.com\""
+                },
+                "5": {
+                  "value": "organization_token: \"5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn\" group_name: \"Daedalus Core Sysadmins\" user_email: \"alvaro.castellano.vela@gmail.com\""
+                },
+                "6": {
+                  "value": "organization_token: \"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\" group_name: \"Megashops Sysadmins\" user_email: \"alvaro.castellano.vela@gmail.com\""
+                },
+                "7": {
+                  "value": {
+                    "organization_token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                    "group_name": "Megashops Sysadmins",
+                    "user_email": "alvaro.castellano.vela@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_hidden_data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "is_super_admin": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "message": "Required user has been added to organization group.",
+                      "_hidden_data": {
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Auto generated using Swagger Inspector",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "No organization_token provided."
+                    }
+                  },
+                  "1": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  },
+                  "2": {
+                    "value": {
+                      "status": 0,
+                      "message": "No group_name provided. No user_email provided."
+                    }
+                  },
+                  "3": {
+                    "value": {
+                      "status": 0,
+                      "message": "There is no registered user with that e-mail address."
+                    }
+                  },
+                  "4": {
+                    "value": {
+                      "status": 0,
+                      "message": "user_email is invalid."
+                    }
+                  },
+                  "5": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required group does not exist."
+                    }
+                  },
+                  "6": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required group does not exist."
+                    }
+                  },
+                  "7": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid user."
+                    }
+                  },
+                  "8": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required user is already assigned to this group."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non admin user request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Your organization roles does not match with the following roles: organization master."
                     }
                   }
                 }
@@ -462,6 +914,304 @@
         }
       }
     },
+    "/organization/removerolegroup": {
+      "delete": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Remove gorup from organization",
+        "description": "Admin users are allowed to remove entire organization groups",
+        "security": [
+          {
+            "token_security": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succeded response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_hidden_data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "is_super_admin": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "message": "Selected group has been removed from organization.",
+                      "_hidden_data": {
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request responses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Session token expired."
+                    }
+                  },
+                  "1": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  },
+                  "2": {
+                    "value": {
+                      "status": 0,
+                      "message": "No group_name provided."
+                    }
+                  },
+                  "3": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required group does not exist."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non admin user request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Your organization roles does not match with the following roles: organization master."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organization/removeuserfromgroup": {
+      "delete": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Remove user from group",
+        "description": "Admin users are allowed remove users from its groups",
+        "security": [
+          {
+            "token_security": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succeded response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_hidden_data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "is_super_admin": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "message": "Required user has been removed from organization group.",
+                      "_hidden_data": {
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request responses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Required user does not belong to this group."
+                    }
+                  },
+                  "1": {
+                    "value": {
+                      "status": 0,
+                      "message": "user_email is invalid."
+                    }
+                  },
+                  "2": {
+                    "value": {
+                      "status": 0,
+                      "message": "There is no registered user with that e-mail address."
+                    }
+                  },
+                  "3": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  },
+                  "4": {
+                    "value": {
+                      "status": 0,
+                      "message": "There is no registered user with that e-mail address."
+                    }
+                  },
+                  "5": {
+                    "value": {
+                      "status": 0,
+                      "message": "There is no registered user with that e-mail address."
+                    }
+                  },
+                  "6": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  },
+                  "7": {
+                    "value": {
+                      "status": 0,
+                      "message": "No user_email provided."
+                    }
+                  },
+                  "8": {
+                    "value": {
+                      "status": 0,
+                      "message": "No group_name provided. No user_email provided."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non admin user request response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Your organization roles does not match with the following roles: organization master."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/organization/show": {
       "get": {
         "tags": [
@@ -582,6 +1332,162 @@
         }
       }
     },
+    "/organization/showoallgroups/{organization_token}": {
+      "parameters": [
+        {
+          "name": "organization_token",
+          "in": "path",
+          "description": "Organization Token",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "tags": [
+          "Organization"
+        ],
+        "summary": "Show all organization groups",
+        "description": "Admin users are allowed to see all organization groups",
+        "security": [
+          {
+            "token_security": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succeded request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OrganizationGroup"
+                    },
+                    "_hidden_data": {
+                      "$ref": "#/components/schemas/HiddenOrganizationGroup"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "data": {
+                        "groups": {
+                          "Daedalus Super Administrators": {
+                            "roles": [
+                              "organization_master",
+                              "daedalus_manager"
+                            ],
+                            "users": [
+                              "admin@daedalus-project.io"
+                            ]
+                          }
+                        }
+                      },
+                      "_hidden_data": {
+                        "groups": {
+                          "Daedalus Super Administrators": {
+                            "id": 1,
+                            "users": {
+                              "admin@daedalus-project.io": {
+                                "_hidden_data": {
+                                  "user": {
+                                    "id": 1,
+                                    "is_super_admin": 1
+                                  }
+                                },
+                                "data": {
+                                  "user": {
+                                    "active": 1,
+                                    "surname": "User",
+                                    "e-mail": "admin@daedalus-project.io",
+                                    "api_key": "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p",
+                                    "name": "Admin",
+                                    "is_admin": 1,
+                                    "phone": ""
+                                  }
+                                }
+                              }
+                            },
+                            "roles": {
+                              "organization_master": 1,
+                              "daedalus_manager": 8
+                            }
+                          }
+                        },
+                        "user": {
+                          "is_super_admin": 1,
+                          "id": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "If user does not belong to required organization, API response does not return if organization_token exists or not.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Invalid organization token."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "If user belongs to required organization API response is forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 0,
+                      "message": "Your organization roles does not match with the following roles: organization master."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/organization/showusergroups": {
       "get": {
         "tags": [
@@ -596,7 +1502,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Common response",
+            "description": "Success response",
             "content": {
               "application/json": {
                 "schema": {
@@ -612,16 +1518,151 @@
                 },
                 "examples": {
                   "0": {
-                    "value": "{\"data\":{\"organizations\":{\"Megashops\":{\"groups\":{\"Megashops Administrators\":{\"users\":[\"admin@daedalus-project.io\"],\"roles\":[\"organization_master\"]}},\"token\":\"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\",\"name\":\"Megashops\"},\"Daedalus Project\":{\"groups\":{\"Daedalus Super Administrators\":{\"roles\":[\"organization_master\",\"daedalus_manager\"],\"users\":[\"admin@daedalus-project.io\"]}},\"token\":\"5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn\",\"name\":\"Daedalus Project\"}}},\"status\":1,\"_hidden_data\":{\"user\":{\"is_super_admin\":1,\"id\":1},\"organizations\":{\"Daedalus Project\":{\"id\":1,\"groups\":{\"Daedalus Super Administrators\":{\"users\":{\"admin@daedalus-project.io\":{\"data\":{\"user\":{\"e-mail\":\"admin@daedalus-project.io\",\"phone\":\"\",\"surname\":\"User\",\"api_key\":\"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p\",\"is_admin\":1,\"name\":\"Admin\",\"active\":1}},\"_hidden_data\":{\"user\":{\"id\":1,\"is_super_admin\":1}}}},\"roles\":{\"daedalus_manager\":8,\"organization_master\":1},\"id\":1}}},\"Megashops\":{\"id\":2,\"groups\":{\"Megashops Administrators\":{\"users\":{\"admin@daedalus-project.io\":{\"data\":{\"user\":{\"surname\":\"User\",\"phone\":\"\",\"e-mail\":\"admin@daedalus-project.io\",\"active\":1,\"name\":\"Admin\",\"is_admin\":1,\"api_key\":\"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p\"}},\"_hidden_data\":{\"user\":{\"id\":1,\"is_super_admin\":1}}}},\"roles\":{\"organization_master\":1},\"id\":2}}}}}}"
+                    "value": {
+                      "status": 1,
+                      "data": {
+                        "organizations": {
+                          "Megashops": {
+                            "name": "Megashops",
+                            "token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                            "groups": {
+                              "Megashops Administrators": {
+                                "users": [
+                                  "admin@daedalus-project.io"
+                                ],
+                                "roles": [
+                                  "organization_master"
+                                ]
+                              }
+                            }
+                          },
+                          "Daedalus Project": {
+                            "name": "Daedalus Project",
+                            "token": "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn",
+                            "groups": {
+                              "Daedalus Super Administrators": {
+                                "roles": [
+                                  "organization_master",
+                                  "daedalus_manager"
+                                ],
+                                "users": [
+                                  "admin@daedalus-project.io"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "_hidden_data": {
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": 1
+                        },
+                        "organizations": {
+                          "Daedalus Project": {
+                            "id": 1,
+                            "groups": {
+                              "Daedalus Super Administrators": {
+                                "id": 2,
+                                "users": {
+                                  "admin@daedalus-project.io": {
+                                    "data": {
+                                      "user": {
+                                        "name": "Admin",
+                                        "surname": "User",
+                                        "e-mail": "admin@daedalus-project.io",
+                                        "phone": "",
+                                        "api_key": "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p",
+                                        "is_admin": 1,
+                                        "active": 1
+                                      }
+                                    },
+                                    "_hidden_data": {
+                                      "user": {
+                                        "id": 1,
+                                        "is_super_admin": 1
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "roles": {
+                              "daedalus_manager": 8,
+                              "organization_master": 1
+                            }
+                          },
+                          "Megashops": {
+                            "id": 2,
+                            "groups": {
+                              "Megashops Administrators": {
+                                "users": {
+                                  "admin@daedalus-project.io": {
+                                    "data": {
+                                      "user": {
+                                        "name": "Admin",
+                                        "surname": "User",
+                                        "e-mail": "admin@daedalus-project.io",
+                                        "phone": "",
+                                        "api_key": "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p",
+                                        "is_admin": 1,
+                                        "active": 1
+                                      }
+                                    },
+                                    "_hidden_data": {
+                                      "user": {
+                                        "id": 1,
+                                        "is_super_admin": 1
+                                      }
+                                    }
+                                  }
+                                },
+                                "roles": {
+                                  "organization_master": 1
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   },
                   "1": {
-                    "value": "{\"data\":{\"organizations\":{\"Megashops\":{\"name\":\"Megashops\",\"groups\":{\"Megashops Administrators\":{\"users\":[\"admin@daedalus-project.io\"],\"roles\":[\"organization_master\"]}},\"token\":\"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\"}}},\"status\":1}"
+                    "value": {
+                      "status": 1,
+                      "data": {
+                        "organizations": {
+                          "Megashops": {
+                            "name": "Megashops",
+                            "token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                            "groups": {
+                              "Megashops Administrators": {
+                                "users": [
+                                  "admin@daedalus-project.io"
+                                ],
+                                "roles": [
+                                  "organization_master"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
                   },
                   "2": {
-                    "value": "{\"data\":{\"organizations\":{\"Megashops\":{\"name\":\"Megashops\",\"groups\":{},\"token\":\"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\"}}},\"status\":1}"
-                  },
-                  "3": {
-                    "value": "{\"data\":{\"organizations\":{\"Megashops\":{\"name\":\"Megashops\",\"token\":\"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku\",\"groups\":{\"Megashops Administrators\":{\"users\":[\"admin@daedalus-project.io\"],\"roles\":[\"organization_master\"]}}},\"Daedalus Project\":{\"groups\":{\"Daedalus Super Administrators\":{\"users\":[\"admin@daedalus-project.io\"],\"roles\":[\"organization_master\",\"daedalus_manager\"]}},\"token\":\"5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn\",\"name\":\"Daedalus Project\"}}},\"_hidden_data\":{\"user\":{\"id\":1,\"is_super_admin\":1},\"organizations\":{\"Daedalus Project\":{\"id\":1,\"groups\":{\"Daedalus Super Administrators\":{\"users\":{\"admin@daedalus-project.io\":{\"data\":{\"user\":{\"e-mail\":\"admin@daedalus-project.io\",\"surname\":\"User\",\"is_admin\":1,\"api_key\":\"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p\",\"active\":1,\"name\":\"Admin\",\"phone\":\"\"}},\"_hidden_data\":{\"user\":{\"id\":1,\"is_super_admin\":1}}}},\"id\":1,\"roles\":{\"daedalus_manager\":8,\"organization_master\":1}}}},\"Megashops\":{\"groups\":{\"Megashops Administrators\":{\"users\":{\"admin@daedalus-project.io\":{\"_hidden_data\":{\"user\":{\"is_super_admin\":1,\"id\":1}},\"data\":{\"user\":{\"is_admin\":1,\"phone\":\"\",\"name\":\"Admin\",\"active\":1,\"api_key\":\"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p\",\"surname\":\"User\",\"e-mail\":\"admin@daedalus-project.io\"}}}},\"id\":2,\"roles\":{\"organization_master\":1}}},\"id\":2}}},\"status\":1}"
+                    "value": {
+                      "status": 1,
+                      "data": {
+                        "organizations": {
+                          "Megashops": {
+                            "name": "Megashops",
+                            "token": "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku",
+                            "groups": null
+                          }
+                        }
+                      }
+                    }
                   }
                 }
               }
