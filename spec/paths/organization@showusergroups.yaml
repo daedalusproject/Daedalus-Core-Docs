@@ -1,4 +1,4 @@
- get:
+get:
   tags:
     - Organization
   summary: Show orgaization user groups
@@ -7,7 +7,7 @@
     - token_security: []
   responses:
     '200':
-      description: Common response
+      description: Success response
       content:
         application/json:
           schema:
@@ -19,30 +19,98 @@
                 $ref: '#/components/schemas/HiddenOrganizations'
           examples:
             '0':
-              value: >-
-                {"data":{"organizations":{"Megashops":{"groups":{"Megashops
-                Administrators":{"users":["admin@daedalus-project.io"],"roles":["organization_master"]}},"token":"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku","name":"Megashops"},"Daedalus
-                Project":{"groups":{"Daedalus Super
-                Administrators":{"roles":["organization_master","daedalus_manager"],"users":["admin@daedalus-project.io"]}},"token":"5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn","name":"Daedalus
-                Project"}}},"status":1,"_hidden_data":{"user":{"is_super_admin":1,"id":1},"organizations":{"Daedalus
-                Project":{"id":1,"groups":{"Daedalus Super
-                Administrators":{"users":{"admin@daedalus-project.io":{"data":{"user":{"e-mail":"admin@daedalus-project.io","phone":"","surname":"User","api_key":"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p","is_admin":1,"name":"Admin","active":1}},"_hidden_data":{"user":{"id":1,"is_super_admin":1}}}},"roles":{"daedalus_manager":8,"organization_master":1},"id":1}}},"Megashops":{"id":2,"groups":{"Megashops
-                Administrators":{"users":{"admin@daedalus-project.io":{"data":{"user":{"surname":"User","phone":"","e-mail":"admin@daedalus-project.io","active":1,"name":"Admin","is_admin":1,"api_key":"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"}},"_hidden_data":{"user":{"id":1,"is_super_admin":1}}}},"roles":{"organization_master":1},"id":2}}}}}}
+              value:
+                status: 1
+                data:
+                  organizations:
+                    "Megashops":
+                      name: "Megashops"
+                      token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
+                      groups:
+                        "Megashops Administrators":
+                          users:
+                            - "admin@daedalus-project.io"
+                          roles: 
+                            - "organization_master"
+                    "Daedalus Project":
+                      name: "Daedalus Project"
+                      token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
+                      groups:
+                        "Daedalus Super Administrators":
+                          roles: 
+                            - "organization_master"
+                            - "daedalus_manager"
+                          users:
+                            - "admin@daedalus-project.io"
+                _hidden_data:
+                  user:
+                    id: 1
+                    is_super_admin: 1
+                  organizations:
+                    "Daedalus Project":
+                      id: 1
+                      groups:
+                        "Daedalus Super Administrators":
+                          id: 2
+                          users:
+                            "admin@daedalus-project.io":
+                              data:
+                                user:
+                                  name: "Admin"
+                                  surname: "User"
+                                  e-mail: "admin@daedalus-project.io"
+                                  phone: ""
+                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                                  is_admin: 1
+                                  active: 1
+                              _hidden_data:
+                                user:
+                                  id: 1
+                                  is_super_admin: 1
+                      roles:
+                        "daedalus_manager": 8
+                        "organization_master": 1
+                    "Megashops":
+                      id: 2
+                      groups:
+                        "Megashops Administrators":
+                          users:
+                            "admin@daedalus-project.io":
+                              data: 
+                                user:
+                                  name: "Admin"
+                                  surname: "User"
+                                  e-mail: "admin@daedalus-project.io"
+                                  phone: ""
+                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                                  is_admin: 1
+                                  active: 1
+                              _hidden_data:
+                                user:
+                                  id: 1
+                                  is_super_admin: 1
+                          roles: 
+                            "organization_master": 1
             '1':
-              value: >-
-                {"data":{"organizations":{"Megashops":{"name":"Megashops","groups":{"Megashops
-                Administrators":{"users":["admin@daedalus-project.io"],"roles":["organization_master"]}},"token":"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"}}},"status":1}
+              value:
+                status: 1
+                data:
+                  organizations:
+                    "Megashops":
+                        name: "Megashops"
+                        token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
+                        groups:
+                          "Megashops Administrators":
+                            users:
+                              - "admin@daedalus-project.io"
+                            roles: 
+                              - "organization_master"
             '2':
-              value: >-
-                {"data":{"organizations":{"Megashops":{"name":"Megashops","groups":{},"token":"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"}}},"status":1}
-            '3':
-              value: >-
-                {"data":{"organizations":{"Megashops":{"name":"Megashops","token":"kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku","groups":{"Megashops
-                Administrators":{"users":["admin@daedalus-project.io"],"roles":["organization_master"]}}},"Daedalus
-                Project":{"groups":{"Daedalus Super
-                Administrators":{"users":["admin@daedalus-project.io"],"roles":["organization_master","daedalus_manager"]}},"token":"5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn","name":"Daedalus
-                Project"}}},"_hidden_data":{"user":{"id":1,"is_super_admin":1},"organizations":{"Daedalus
-                Project":{"id":1,"groups":{"Daedalus Super
-                Administrators":{"users":{"admin@daedalus-project.io":{"data":{"user":{"e-mail":"admin@daedalus-project.io","surname":"User","is_admin":1,"api_key":"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p","active":1,"name":"Admin","phone":""}},"_hidden_data":{"user":{"id":1,"is_super_admin":1}}}},"id":1,"roles":{"daedalus_manager":8,"organization_master":1}}}},"Megashops":{"groups":{"Megashops
-                Administrators":{"users":{"admin@daedalus-project.io":{"_hidden_data":{"user":{"is_super_admin":1,"id":1}},"data":{"user":{"is_admin":1,"phone":"","name":"Admin","active":1,"api_key":"jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p","surname":"User","e-mail":"admin@daedalus-project.io"}}}},"id":2,"roles":{"organization_master":1}}},"id":2}}},"status":1}
-
+              value:
+                status: 1
+                data:
+                  organizations:
+                    "Megashops":
+                        name: "Megashops"
+                        token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
+                        groups:
