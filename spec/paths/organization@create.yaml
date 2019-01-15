@@ -1,4 +1,4 @@
- post:
+post:
   tags:
     - Organization
   summary: Create organiation
@@ -132,5 +132,3 @@
               value:
                 status: 0
                 message: "You are not an admin user."
-
-

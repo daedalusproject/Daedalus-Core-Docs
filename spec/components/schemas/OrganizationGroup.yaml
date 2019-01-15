@@ -1,0 +1,10 @@
+type: object
+properties:
+  users:
+    type: array
+    items:
+      type: string
+  roles:
+    type: array
+    items:
+      type: string
