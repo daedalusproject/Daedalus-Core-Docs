@@ -1,5 +1,5 @@
 # Daedalus-Core OpenAPI Specification
-[![Build Status](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs.svg?branch=master)](https://travis-ci.com/daedalusproject/Daedalus-Core-Docs)
+[![Build Status](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs.svg?branch=master)](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs)
 ## Steps to finish
 
 1. Enable [Travis](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A) for your repository (**note**: you already have `.travis.yml` file)

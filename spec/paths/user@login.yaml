@@ -19,9 +19,8 @@ post:
         examples:
           '0':
             value:
-              auth:
-                email: admin@daedalus-project.io
-                password: validPa55word_conTaining_Mul7ple_c:h:a:r;s
+              email: admin@daedalus-project.io
+              password: validPa55word_conTaining_Mul7ple_c:h:a:r;s
   responses:
     '200':
       description: >-

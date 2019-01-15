@@ -1,0 +1,75 @@
+ get:
+  tags:
+    - Organization
+  summary: Show organizations
+  description: Admin users are allowed to create new organizations.
+  security:
+    - token_security: []
+  responses:
+    '200':
+      description: Success request, get organizations.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  organizations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        organization_token:
+                          type: string
+              _hidden_data:
+                type: object
+                properties:
+                  organizations:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - id
+                      properties:
+                        id:
+                          type: integer
+
+                  user:
+                    type: object
+                    properties:
+                      is_super_admin:
+                        type: integer
+                      id:
+                        type: integer
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 1
+                data:
+                  organizations:
+                    - "Daedalus Project"
+                    - "Mega Shops"
+                _hidden_data:
+                  organizations:
+                    "MegaShops": 
+                      token: "s.Q8Ymu8q/yqAgZtdAnxyN4Exrwldp0S"
+                      id: 2
+                    "Daedalus Project":
+                      token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
+                      id: 1
+                  user:
+                    id: 1
+                    is_super_admin: 1,
+            '1':
+              value:
+                status: 1
+                data:
+                  organizations:

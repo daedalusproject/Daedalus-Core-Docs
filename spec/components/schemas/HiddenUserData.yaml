@@ -1,0 +1,6 @@
+type: object
+properties:
+  id:
+    type: integer
+  is_super_admin:
+    type: integer

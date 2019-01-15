@@ -1,0 +1,16 @@
+type: object
+properties:
+  e-mail:
+    type: string
+  name:
+    type: string
+  surname:
+    type: string
+  is_admin:
+    type: integer
+  api_key:
+    type: string
+  active:
+    type: integer
+  phone:
+    type: integer
