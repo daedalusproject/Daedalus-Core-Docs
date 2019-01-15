@@ -1,0 +1,82 @@
+delete:
+  tags:
+    - Organization
+  summary: Remove gorup from organization
+  description: Admin users are allowed to remove entire organization groups
+  security:
+    - token_security: []
+  responses:
+    '200':
+      description: Succeded response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              _hidden_data:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      is_super_admin:
+                        type: integer
+                      id:
+                        type: integer
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 1
+                message: "Selected group has been removed from organization."
+                _hidden_data:
+                  user:
+                    id: 1
+                    is_super_admin: 1
+    '400':
+      description: Invalid request responses
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Session token expired."
+            '1':
+              value:
+                status: 0
+                message: "Invalid organization token."
+            '2':
+              value:
+                status: 0
+                message: "No group_name provided."
+            '3':
+              value:
+                status: 0
+                message: "Required group does not exist."
+    '403':
+      description: Non admin user request response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Your organization roles does not match with the following roles: organization master."
