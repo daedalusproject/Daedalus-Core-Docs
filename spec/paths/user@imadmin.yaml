@@ -21,9 +21,11 @@ get:
             '0':
               value:
                 status: 1
-                message: "You are an admin user."
+                message: You are an admin user.
     '400':
-      description: Examples of failed requests because users did not provide their session token or their session token has expired.
+      description: >-
+        Examples of failed requests because users did not provide their session
+        token or their session token has expired.
       content:
         application/json:
           schema:
@@ -31,27 +33,21 @@ get:
             properties:
               message:
                 type: string
-                enum:
-                  - "Session token invalid."
-                  - "No session token provided."
-                  - "Session token expired."
               status:
                 type: integer
-                enum:
-                  - 0
           examples:
             '0':
               value:
                 status: 0
-                message: "Session token invalid."
+                message: Session token invalid.
             '1':
               value:
                 status: 0
-                message: "No session token provided."
+                message: No session token provided.
             '2':
-              value: 
+              value:
                 status: 0
-                message: "Session token expired."
+                message: Session token expired.
     '403':
       description: Examples of failed requests because users are not admin ones.
       content:
@@ -62,7 +58,7 @@ get:
               message:
                 type: string
                 enum:
-                  - "You are not an admin user."
+                  - You are not an admin user.
               status:
                 type: integer
                 enum:
@@ -71,4 +67,4 @@ get:
             '0':
               value:
                 status: 0
-                message: "You are not an admin user."
+                message: You are not an admin user.

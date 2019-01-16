@@ -22,7 +22,7 @@ get:
               data:
                 type: object
                 required:
-                  - active_users
+                  - data
                 properties:
                   active_users:
                     type: array
@@ -44,6 +44,48 @@ get:
                           type: integer
                         email:
                           type: string
+              _hidden_data:
+                type: object
+                properties:
+                  active_users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        is_super_admin:
+                          type: integer
+                        auth_token:
+                          type: string
+                  user:
+                    type: object
+                    properties:
+                      is_super_admin:
+                        type: integer
+                      id:
+                        type: integer
+          examples:
+            '0':
+              value:
+                status: 1
+                data:
+                  active_users:
+                    "other_admin@daedalus-project.io":
+                      surname: "User"
+                      active: 1
+                      is_admin: 0
+                      name: "Other"
+                      e-mail: "other_admin@daedalus-project.io"
+                _hidden_data:
+                  active_users:
+                    "other_admin@daedalus-project.io":
+                      auth_token: "J6um7yRJs0JnsTTGNbaSF2Ntl1sg5hLv2oVlZWqSXqn1SUbEUny0YzjHIa3i5UPR"
+                      id: 2
+                      is_super_admin: 0
+                  user:
+                    id: 1
+                    is_super_admin: 1}
     '403':
       description: I said only andmins
       content:
