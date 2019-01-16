@@ -1,4 +1,4 @@
-openapi: 3.0.0
+swagger: "2.0"
 info:
   version: 0.0.1
   title: Daedalus-Core
@@ -22,5 +22,7 @@ externalDocs:
   description: Daedalus Project Docs
   url: 'https://readthedocs.org'
 
-servers:
-  - url: 'https://api-dev.daedalus-project.io'
+host: 'api-dev.daedalus-project.io'
+basePath: '/'
+schemes:
+  - 'https'
