@@ -20,6 +20,14 @@
     "description": "Daedalus Project Docs",
     "url": "https://readthedocs.org"
   },
+  "tags": [
+    {
+      "name": "Organization"
+    },
+    {
+      "name": "User"
+    }
+  ],
   "servers": [
     {
       "url": "https://api-dev.daedalus-project.io"
@@ -28,6 +36,7 @@
   "paths": {
     "/organization/addroletogroup": {
       "post": {
+        "operationId": "addroletogorup-organizations",
         "tags": [
           "Organization"
         ],
@@ -252,6 +261,7 @@
     },
     "/organization/adduser": {
       "post": {
+        "operationId": "adduser-organizations",
         "tags": [
           "Organization"
         ],
@@ -470,6 +480,7 @@
     },
     "/organization/addusertogroup": {
       "post": {
+        "operationId": "addusertogroups-organizations",
         "tags": [
           "Organization"
         ],
@@ -698,6 +709,7 @@
     },
     "/organization/create": {
       "post": {
+        "operationId": "create-organizations",
         "tags": [
           "Organization"
         ],
@@ -916,6 +928,7 @@
     },
     "/organization/removeorganizationgroup": {
       "delete": {
+        "operationId": "removerolefromgroup-organizations",
         "tags": [
           "Organization"
         ],
@@ -1066,6 +1079,7 @@
     },
     "/organization/removerolegroup": {
       "delete": {
+        "operationId": "removegroup-organizations",
         "tags": [
           "Organization"
         ],
@@ -1200,6 +1214,7 @@
     },
     "/organization/removeuserfromgroup": {
       "delete": {
+        "operationId": "removeuserfromgroup-organizations",
         "tags": [
           "Organization"
         ],
@@ -1364,11 +1379,12 @@
     },
     "/organization/show": {
       "get": {
+        "operationId": "show-organizations",
         "tags": [
           "Organization"
         ],
         "summary": "Show organizations",
-        "description": "Admin users are allowed to create new organizations.",
+        "description": "Users are allowed to show their organizations.",
         "security": [
           {
             "token_security": []
@@ -1495,6 +1511,7 @@
         }
       ],
       "get": {
+        "operationId": "showallgroups-organizations",
         "tags": [
           "Organization"
         ],
@@ -1640,11 +1657,12 @@
     },
     "/organization/showusergroups": {
       "get": {
+        "operationId": "showusergroupsall-organizations",
         "tags": [
           "Organization"
         ],
         "summary": "Show orgaization user groups",
-        "description": "Users are allowed to list its organization groups",
+        "description": "Users are allowed to list its organization groups.",
         "security": [
           {
             "token_security": []
@@ -1834,11 +1852,12 @@
         }
       ],
       "get": {
+        "operationId": "showgroup-organizations",
         "tags": [
           "Organization"
         ],
         "summary": "Show orgaization user groups",
-        "description": "Users are allowed to list its organization groups",
+        "description": "Users are allowed to list its groups belonging required organization.",
         "security": [
           {
             "token_security": []
@@ -1990,6 +2009,7 @@
         }
       ],
       "get": {
+        "operationId": "showusers-organizations",
         "tags": [
           "Organization"
         ],
@@ -2070,16 +2090,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Ping"
                 },
                 "examples": {
                   "0": {
-                    "value": "{\"status\":\"pong\"}"
+                    "value": {
+                      "status": "pong"
+                    }
                   }
                 }
               }
@@ -2090,6 +2107,7 @@
     },
     "/user/confirm": {
       "post": {
+        "operationId": "confirm-user",
         "tags": [
           "User"
         ],
@@ -2237,6 +2255,7 @@
     },
     "/user/imadmin": {
       "get": {
+        "operationId": "imadmin-user",
         "tags": [
           "User"
         ],
@@ -2282,18 +2301,10 @@
                   "type": "object",
                   "properties": {
                     "message": {
-                      "type": "string",
-                      "enum": [
-                        "Session token invalid.",
-                        "No session token provided.",
-                        "Session token expired."
-                      ]
+                      "type": "string"
                     },
                     "status": {
-                      "type": "integer",
-                      "enum": [
-                        0
-                      ]
+                      "type": "integer"
                     }
                   }
                 },
@@ -2357,6 +2368,7 @@
     },
     "/user/login": {
       "post": {
+        "operationId": "login-user",
         "tags": [
           "User"
         ],
@@ -2398,33 +2410,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "data",
-                    "status",
-                    "message"
-                  ],
                   "properties": {
                     "data": {
                       "type": "object",
-                      "required": [
-                        "session_token",
-                        "user"
-                      ],
                       "properties": {
                         "session_token": {
                           "type": "string"
                         },
                         "user": {
                           "type": "object",
-                          "required": [
-                            "is_admin",
-                            "phone",
-                            "api_key",
-                            "surname",
-                            "name",
-                            "active",
-                            "email"
-                          ],
                           "properties": {
                             "is_admin": {
                               "type": "integer"
@@ -2441,11 +2435,11 @@
                             "name": {
                               "type": "string"
                             },
+                            "e-mail": {
+                              "type": "string"
+                            },
                             "active": {
                               "type": "integer"
-                            },
-                            "email": {
-                              "type": "string"
                             }
                           }
                         }
@@ -2453,17 +2447,14 @@
                     },
                     "_hidden_data": {
                       "type": "object",
-                      "required": [
-                        "user"
-                      ],
                       "properties": {
                         "user": {
                           "type": "object",
                           "properties": {
-                            "is_super_admin": {
+                            "id": {
                               "type": "integer"
                             },
-                            "id": {
+                            "is_super_admin": {
                               "type": "integer"
                             }
                           }
@@ -2474,10 +2465,7 @@
                       "type": "string"
                     },
                     "status": {
-                      "type": "integer",
-                      "enum": [
-                        1
-                      ]
+                      "type": "integer"
                     }
                   }
                 },
@@ -2585,10 +2573,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -2620,6 +2604,7 @@
     },
     "/user/register": {
       "post": {
+        "operationId": "register-user",
         "tags": [
           "User"
         ],
@@ -2843,6 +2828,7 @@
     },
     "/user/showactive": {
       "get": {
+        "operationId": "active-user",
         "tags": [
           "User"
         ],
@@ -2873,7 +2859,7 @@
                     "data": {
                       "type": "object",
                       "required": [
-                        "active_users"
+                        "data"
                       ],
                       "properties": {
                         "active_users": {
@@ -2904,6 +2890,70 @@
                               }
                             }
                           }
+                        }
+                      }
+                    },
+                    "_hidden_data": {
+                      "type": "object",
+                      "properties": {
+                        "active_users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "is_super_admin": {
+                                "type": "integer"
+                              },
+                              "auth_token": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "is_super_admin": {
+                              "type": "integer"
+                            },
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "0": {
+                    "value": {
+                      "status": 1,
+                      "data": {
+                        "active_users": {
+                          "other_admin@daedalus-project.io": {
+                            "surname": "User",
+                            "active": 1,
+                            "is_admin": 0,
+                            "name": "Other",
+                            "e-mail": "other_admin@daedalus-project.io"
+                          }
+                        }
+                      },
+                      "_hidden_data": {
+                        "active_users": {
+                          "other_admin@daedalus-project.io": {
+                            "auth_token": "J6um7yRJs0JnsTTGNbaSF2Ntl1sg5hLv2oVlZWqSXqn1SUbEUny0YzjHIa3i5UPR",
+                            "id": 2,
+                            "is_super_admin": 0
+                          }
+                        },
+                        "user": {
+                          "id": 1,
+                          "is_super_admin": "1}"
                         }
                       }
                     }
@@ -2953,6 +3003,7 @@
     },
     "/user/showinactive": {
       "get": {
+        "operationId": "inactive-user",
         "tags": [
           "User"
         ],
@@ -3125,6 +3176,7 @@
     },
     "/user/showorphan": {
       "get": {
+        "operationId": "orphan-user",
         "tags": [
           "User"
         ],
@@ -3293,6 +3345,7 @@
     },
     "/user/showregistered": {
       "get": {
+        "operationId": "registered-user",
         "tags": [
           "User"
         ],
@@ -3589,6 +3642,12 @@
         "additionalProperties": {
           "$ref": "#/components/schemas/Organization"
         }
+      },
+      "Ping": {
+        "description": "Ping status",
+        "type": "string",
+        "format": "test",
+        "example": "pong"
       },
       "UserData": {
         "type": "object",
