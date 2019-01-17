@@ -1,4 +1,5 @@
 get:
+  operationId: inactive-user
   tags:
     - User
   summary: Show Inactive Users

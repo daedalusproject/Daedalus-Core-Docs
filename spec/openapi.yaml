@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: "3.0.0"
 info:
   version: 0.0.1
   title: Daedalus-Core
@@ -21,6 +21,10 @@ info:
 externalDocs:
   description: Daedalus Project Docs
   url: 'https://readthedocs.org'
+
+tags:
+  - name: Organization
+  - name: User
 
 servers:
   - url: 'https://api-dev.daedalus-project.io'

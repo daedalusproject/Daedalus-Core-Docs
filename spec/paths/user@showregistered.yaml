@@ -1,4 +1,5 @@
 get:
+  operationId: registered-user
   tags:
     - User
   summary: Show Registered Users

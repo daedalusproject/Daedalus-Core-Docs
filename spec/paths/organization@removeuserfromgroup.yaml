@@ -1,4 +1,5 @@
 delete:
+  operationId: removeuserfromgroup-organizations
   tags:
     - Organization
   summary: Remove user from group
