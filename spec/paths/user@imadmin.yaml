@@ -1,4 +1,5 @@
 get:
+  operationId: imadmin-user
   tags:
     - User
   summary: User Imadmin

@@ -1,4 +1,5 @@
 get:
+  operationId: orphan-user
   tags:
     - User
   summary: Show Registered Users

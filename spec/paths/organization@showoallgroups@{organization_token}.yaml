@@ -6,6 +6,7 @@ parameters:
     schema:
       type: string
 get:
+  operationId: showallgroups-organizations
   tags:
     - Organization
   summary: Show all organization groups

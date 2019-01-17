@@ -1,4 +1,5 @@
  post:
+  operationId: addroletogorup-organizations
   tags:
     - Organization
   summary: Add roles to organizations groups

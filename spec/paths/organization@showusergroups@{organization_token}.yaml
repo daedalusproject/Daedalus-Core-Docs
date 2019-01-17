@@ -6,10 +6,11 @@ parameters:
     schema:
       type: string
 get:
+  operationId: showgroup-organizations
   tags:
     - Organization
   summary: Show orgaization user groups
-  description: Users are allowed to list its organization groups
+  description: Users are allowed to list its groups belonging required organization.
   security:
     - token_security: []
   responses:

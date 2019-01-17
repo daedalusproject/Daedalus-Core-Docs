@@ -22,6 +22,9 @@ externalDocs:
   description: Daedalus Project Docs
   url: 'https://readthedocs.org'
 
+tags:
+  - name: Organization
+  - name: User
 
 servers:
   - url: 'https://api-dev.daedalus-project.io'

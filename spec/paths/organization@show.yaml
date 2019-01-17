@@ -1,8 +1,9 @@
  get:
+  operationId: show-organizations
   tags:
     - Organization
   summary: Show organizations
-  description: Admin users are allowed to create new organizations.
+  description: Users are allowed to show their organizations.
   security:
     - token_security: []
   responses:

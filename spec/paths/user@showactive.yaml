@@ -1,4 +1,5 @@
 get:
+  operationId: active-user
   tags:
     - User
   summary: Show Active Users
