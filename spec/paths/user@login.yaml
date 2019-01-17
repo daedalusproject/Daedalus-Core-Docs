@@ -1,4 +1,5 @@
 post:
+  operationId: login-user
   tags:
     - User
   summary: User Login
@@ -23,36 +24,19 @@ post:
               password: validPa55word_conTaining_Mul7ple_c:h:a:r;s
   responses:
     '200':
-      description: >-
-        If login success, return user data and session token, superadmin users
-        receive _hidden_data.
+      description: If login success, return user data and session token, superadmin users receive _hidden_data.
       content:
         application/json:
           schema:
             type: object
-            required:
-              - data
-              - status
-              - message
             properties:
               data:
                 type: object
-                required:
-                  - session_token
-                  - user
                 properties:
                   session_token:
                     type: string
                   user:
                     type: object
-                    required:
-                      - is_admin
-                      - phone
-                      - api_key
-                      - surname
-                      - name
-                      - active
-                      - email
                     properties:
                       is_admin:
                         type: integer
@@ -64,28 +48,24 @@ post:
                         type: string
                       name:
                         type: string
+                      e-mail:
+                        type: string
                       active:
                         type: integer
-                      email:
-                        type: string
               _hidden_data:
                 type: object
-                required:
-                  - user
                 properties:
                   user:
                     type: object
                     properties:
-                      is_super_admin:
-                        type: integer
                       id:
+                        type: integer
+                      is_super_admin:
                         type: integer
               message:
                 type: string
               status:
                 type: integer
-                enum:
-                  - 1
           examples:
             '0':
              value:
@@ -159,9 +139,6 @@ post:
         application/json:
           schema:
             type: object
-            required:
-              - status
-              - message
             properties:
               message:
                 type: string

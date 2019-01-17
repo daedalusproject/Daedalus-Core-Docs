@@ -1,8 +1,9 @@
 get:
+  operationId: showusergroupsall-organizations
   tags:
     - Organization
   summary: Show orgaization user groups
-  description: Users are allowed to list its organization groups
+  description: Users are allowed to list its organization groups.
   security:
     - token_security: []
   responses:
