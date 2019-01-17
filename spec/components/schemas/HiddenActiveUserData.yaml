@@ -1,12 +1,6 @@
 type: object
-required:
-  - id
-  - is_super_admin
-  - auth_token
 properties:
   id:
     type: integer
   is_super_admin:
     type: integer
-  auth_token:
-    type: string

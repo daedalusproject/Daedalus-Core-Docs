@@ -28,44 +28,16 @@ get:
                   active_users:
                     type: array
                     items:
-                      type: object
-                      required:
-                        - is_admin
-                        - surname
-                        - name
-                        - email
-                      properties:
-                        is_admin:
-                          type: integer
-                        surname:
-                          type: string
-                        name:
-                          type: string
-                        active:
-                          type: integer
-                        email:
-                          type: string
+                      $ref: '#/components/schemas/UserData'
               _hidden_data:
                 type: object
                 properties:
                   active_users:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        is_super_admin:
-                          type: integer
-                        auth_token:
-                          type: string
+                      $ref: '#/components/schemas/HiddenActiveUserData'
                   user:
-                    type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
           examples:
             '0':
               value:
