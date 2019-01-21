@@ -1,0 +1,118 @@
+post:
+  operationId: creategroup-organizations
+  tags:
+    - Organization
+  summary: Create organiation group
+  description: Admin users are allowed to create organization groups
+  security:
+    - token_security: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - organization_token
+           - group_name
+          properties:
+            organization_token:
+              type: string
+            group_name:
+              type: string
+        examples:
+          '0':
+            value:
+              organization_token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
+              group_name: "Daedalus project firemen"
+  responses:
+    '200':
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - data
+              - message
+            properties:
+              status:
+                type: integer
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  organization_groups:
+                    type: object
+                    properties:
+                      group_name:
+                        type: string
+              _hidden_data:
+                type: object
+                properties:
+                  organization_groups:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                  user:
+                    $ref: '#/components/schemas/HiddenUserData'
+          examples:
+            '0':
+              value:
+                data:
+                  organization_groups:
+                    group_name":"Daedalus project firemen"
+                status: 1
+                message: "Organization grouphas been created."
+                _hidden_data:
+                  organization_groups: 
+                    id: 2
+                  user:
+                    id: 1
+                    is_super_admin: 1
+    '400':
+      description: Invalid responses
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Invalid organization token."
+            '1':
+              value:
+                status: 0
+                message: "No group_name provided."
+            '2':
+              value:
+                status: 0
+                message: "No organization_token provided."
+            '3':
+              value:
+                status: 0
+                message: "No session token provided."
+    '403':
+      description: Only admins are allowed to create groups
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Your organization roles does not match with the following roles: organization master."
