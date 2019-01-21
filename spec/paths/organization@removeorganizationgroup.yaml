@@ -1,4 +1,4 @@
-delete:
+post:
   operationId: removerolefromgroup-organizations
   tags:
     - Organization

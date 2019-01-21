@@ -1,4 +1,4 @@
-delete:
+post:
   operationId: removeuserfromgroup-organizations
   tags:
     - Organization
@@ -6,6 +6,24 @@ delete:
   description: Admin users are allowed remove users from its groups
   security:
     - token_security: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            user_email:
+              type: string
+            group_name:
+              type: string
+            organization_token:
+              type: string
+        examples:
+          '0':
+            value:
+              organization_token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
+              user_email: "other_admin@daedalus-project.io"
+              group_name: "Daedalus project firemen"
   responses:
     '200':
       description: Succeded response
