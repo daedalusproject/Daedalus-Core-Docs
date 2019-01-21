@@ -131,3 +131,26 @@ get:
               value:
                 status: 0
                 message: "You are not an admin user."
+    '400':
+      description: Requests without session token
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - message
+              - status
+            properties:
+              message:
+                type: string
+                enum:
+                  - "No session token provided."
+              status:
+                type: integer
+                enum:
+                  - 0
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "No session token provided."
