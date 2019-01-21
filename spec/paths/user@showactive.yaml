@@ -23,7 +23,7 @@ get:
               data:
                 type: object
                 required:
-                  - data
+                  - active_users
                 properties:
                   active_users:
                     type: array
