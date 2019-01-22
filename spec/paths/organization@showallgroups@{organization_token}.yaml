@@ -24,7 +24,7 @@ get:
               data:
                 $ref: '#/components/schemas/OrganizationGroup'
               _hidden_data:
-                $ref: '#/components/schemas/HiddenOrganizationGroup'          
+                $ref: '#/components/schemas/HiddenOrganizationGroup'
               status:
                 type: integer
           examples:
@@ -80,6 +80,10 @@ get:
               value:
                 status: 0
                 message: "Invalid organization token."
+            '1':
+              value:
+                status: 0
+                message: "No session token provided."
     '403':
       description: If user belongs to required organization API response is forbidden.
       content:
