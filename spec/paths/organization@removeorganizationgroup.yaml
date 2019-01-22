@@ -6,7 +6,6 @@ post:
   description: Admin users are allowed to remove entire organization groups
   security:
     - token_security: []
-
   requestBody:
     content:
       application/json:
