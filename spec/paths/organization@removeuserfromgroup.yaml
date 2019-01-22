@@ -111,6 +111,10 @@ post:
               value:
                 status: 0
                 message: "Session token expired."
+            '11':
+              value:
+                status: 0
+                message: "Cannot remove this user, no more admin users will left in this organization."
     '403':
       description: Non admin user request response
       content:
