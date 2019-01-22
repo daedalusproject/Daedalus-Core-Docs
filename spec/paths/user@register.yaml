@@ -86,7 +86,7 @@ post:
             '1':
               value:
                 status: 1
-                message: "User has been registered."                    
+                message: "User has been registered."
     '400':
       description: Wrong data responses
       content:

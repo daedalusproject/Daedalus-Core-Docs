@@ -40,15 +40,15 @@ get:
             '0':
               value:
                 status: 0
-                message: Session token invalid.
+                message: "Session token invalid."
             '1':
               value:
                 status: 0
-                message: No session token provided.
+                message: "No session token provided."
             '2':
               value:
                 status: 0
-                message: Session token expired.
+                message: "Session token expired."
     '403':
       description: Examples of failed requests because users are not admin ones.
       content:
@@ -59,7 +59,7 @@ get:
               message:
                 type: string
                 enum:
-                  - You are not an admin user.
+                  - "You are not an admin user."
               status:
                 type: integer
                 enum:
@@ -68,4 +68,4 @@ get:
             '0':
               value:
                 status: 0
-                message: You are not an admin user.
+                message: "You are not an admin user."
