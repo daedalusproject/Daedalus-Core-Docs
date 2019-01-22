@@ -1,12 +1,24 @@
 type: object
 required:
-  - id
-  - is_super_admin
-  - auth_token
+  - name
+  - surname
+  - e-mail
+  - is_admin
+  - phone
+  - api_key
+  - active
 properties:
-  id:
-    type: integer
-  is_super_admin:
-    type: integer
-  auth_token:
+  name:
     type: string
+  surname:
+    type: string
+  e-mail:
+    type: string
+  is_admin:
+    type: integer
+  phone:
+    type: integer
+  api_key:
+    type: string
+  active:
+    type: integer

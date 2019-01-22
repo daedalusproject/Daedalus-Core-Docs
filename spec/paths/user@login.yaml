@@ -36,32 +36,12 @@ post:
                   session_token:
                     type: string
                   user:
-                    type: object
-                    properties:
-                      is_admin:
-                        type: integer
-                      phone:
-                        type: string
-                      api_key:
-                        type: string
-                      surname:
-                        type: string
-                      name:
-                        type: string
-                      e-mail:
-                        type: string
-                      active:
-                        type: integer
+                    $ref: '#/components/schemas/UserData'
               _hidden_data:
                 type: object
                 properties:
                   user:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      is_super_admin:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
