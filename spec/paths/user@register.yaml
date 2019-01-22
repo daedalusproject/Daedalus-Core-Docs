@@ -115,10 +115,18 @@ post:
               value:
                 status: 0
                 message: "There already exists a user using this e-mail."
-                _hidden_data: 
-                  user:
-                    id: 1
-                    is_super_admin: 1
+            '1':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '2':
+              value:
+                status: 0
+                message: "No session token provided."
+            '3':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin user response
       content:

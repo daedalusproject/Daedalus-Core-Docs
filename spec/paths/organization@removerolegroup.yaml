@@ -102,6 +102,14 @@ post:
               value:
                 status: 0
                 message: "Cannot remove this role, no more admin roles will left in this organization."
+            '9':
+              value:
+                status: 0
+                message: "No session token provided."
+            '10':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: If organization user is not admin of that organization it receives the following response.
       content:

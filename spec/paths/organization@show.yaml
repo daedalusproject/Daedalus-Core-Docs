@@ -74,3 +74,27 @@
                 status: 1
                 data:
                   organizations:
+    '400':
+      description: There is a problem with session token
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '1':
+              value:
+                status: 0
+                message: "No session token provided."
+            '2':
+              value:
+                status: 0
+                message: "Session token expired."
