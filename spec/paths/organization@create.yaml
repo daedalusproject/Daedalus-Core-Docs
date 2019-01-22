@@ -19,15 +19,10 @@ post:
         examples:
           '0':
             value:
-              organization_data:
-                name: "Mega Shops"
+              name: "Mega Shops"
           '1':
             value:
-              organization_data:
-                name: "Daedalus Project"
-          '2':
-            value:
-              organization_data:
+              name: "Daedalus Project"
   responses:
     '200':
       description: Sucess responses, superadmin also receives _hidden_data
