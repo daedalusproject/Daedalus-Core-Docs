@@ -105,6 +105,18 @@ post:
               value:
                 status: 0
                 message: "Invalid organization data."
+            '2':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '3':
+              value:
+                status: 0
+                message: "No session token provided."
+            '4':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin users are not allowed to create organizations
       content:

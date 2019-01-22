@@ -103,6 +103,14 @@ post:
               value:
                 status: 0
                 message: "No group_name provided. No user_email provided."
+            '9':
+              value:
+                status: 0
+                message: "No session token provided."
+            '10':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin user request response
       content:

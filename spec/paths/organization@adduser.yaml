@@ -92,31 +92,35 @@
             '0':
               value:
                 status: 0
-                message: "No session token provided."
+                message: "No organization_token provided."
             '1':
               value:
                 status: 0
-                message: "No organization_token provided."
+                message: "No user_email provided."
             '2':
               value:
                 status: 0
-                message: "No user_email provided."
-            '3':
-              value:
-                status: 0
                 message: "user_email is invalid."
-            '4':
+            '3':
                value:
                 status: 0
                 message: "There is no registered user with that e-mail address"
-            '5':
-              value:
-                status: 0
-                message: "Session token expired."
-            '6':
+            '4':
               value:
                 status: 0
                 message: "Invalid organization token."
+            '5':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '6':
+              value:
+                status: 0
+                message: "No session token provided."
+            '7':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin users of given organization are not allowed to add users to its organizations
       content:

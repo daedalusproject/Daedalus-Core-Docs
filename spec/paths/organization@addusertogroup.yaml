@@ -136,6 +136,18 @@
               value:
                 status: 0
                 message: "Required user is already assigned to this group."
+            '9':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '10':
+              value:
+                status: 0
+                message: "No session token provided."
+            '11':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin user request response
       content:

@@ -104,27 +104,35 @@
             '1':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "No group_name provided. No role_name provided."
             '2':
               value:
                 status: 0
-                message: "No group_name provided. No role_name provided."
+                message: "No role_name provided."
             '3':
               value:
                 status: 0
-                message: "No role_name provided."
+                message: "Required group does not exist."
             '4':
               value:
                 status: 0
-                message: "Required group does not exist."
+                message: "Required role does not exist."
             '5':
               value:
                 status: 0
-                message: "Required role does not exist."
+                message: "Required role is already assigned to this group."
             '6':
               value:
                 status: 0
-                message: "Required role is already assigned to this group."
+                message: "Session token invalid."
+            '7':
+              value:
+                status: 0
+                message: "No session token provided."
+            '8':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin requests
       content:

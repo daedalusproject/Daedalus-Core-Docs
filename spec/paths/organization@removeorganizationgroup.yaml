@@ -74,12 +74,20 @@ post:
             '1':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "Session token invalid."
             '2':
               value:
                 status: 0
-                message: "No group_name provided."
+                message: "No session token provided."
             '3':
+              value:
+                status: 0
+                message: "Invalid organization token."
+            '4':
+              value:
+                status: 0
+                message: "No group_name provided."
+            '5':
               value:
                 status: 0
                 message: "Required group does not exist."

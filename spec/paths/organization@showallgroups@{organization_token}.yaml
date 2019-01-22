@@ -83,7 +83,15 @@ get:
             '1':
               value:
                 status: 0
+                message: "Session token invalid."
+            '2':
+              value:
+                status: 0
                 message: "No session token provided."
+            '3':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: If user belongs to required organization API response is forbidden.
       content:
