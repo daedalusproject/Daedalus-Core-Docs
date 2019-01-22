@@ -1,0 +1,93 @@
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+get:
+  operationId: showorganizationusergroups-organization
+  tags:
+    - Organization
+  summary: Show all organization groups
+  description: Show required user organization groups
+  security:
+    - token_security: []
+  responses:
+    '200':
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+              data:
+                $ref: '#/components/schemas/Organizations'
+              _hidden_data:
+                $ref: '#/components/schemas/HiddenOrganizations'
+          examples:
+            '0':
+              value:
+                status: 1
+                data:
+                  groups:
+                    "Mega Shops Administrators":
+                      users:
+                       - "admin@daedalus-project.io"
+                      roles:
+                        - "organization_master"
+                _hidden_data:
+                  user:
+                    id: 1
+                    is_super_admin: 1
+                  groups:
+                    "Mega Shops Administrators":
+                      id: 3
+                      users:
+                        "admin@daedalus-project.io":
+                          _hidden_data: 
+                            user:
+                              is_super_admin: 1
+                              id: 1
+                          data: 
+                            user:
+                              name: "Admin"
+                              surname: "User"
+                              e-mail: "admin@daedalus-project.io"
+                              is_admin: 1
+                              active: 1
+                              api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                              phone: ""
+                      roles:
+                        "organization_master": 1
+            '1':
+              value:
+                status: 1
+                data:
+                  groups:
+                    "Daedalus project firemen":
+                      users:
+                        - "other_admin@daedalus-project.io"
+                      roles: []
+    '400':
+      description: If user provides an invalid organization token or an organization token of organization where user does not bellow return code is 400
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0,
+                message: "Invalid organization token."
+            '1':
+              value: 
+                status: 0
+                message: "No session token provided."
