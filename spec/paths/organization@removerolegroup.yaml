@@ -3,9 +3,31 @@ post:
   tags:
     - Organization
   summary: Remove role from group
-  description: Admin users are allowed remove roles from organization groups
+  description: Admin users are allowed remove roles from organization groups, if this action left no admins inside an organization it cannot be done.
   security:
     - token_security: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+           - organization_token
+           - group_name
+           - role_name
+          properties:
+            organization_token: 
+              type: string
+            group_name:
+              type: string
+            role_name:
+              type: string
+        examples:
+          '0':
+            value:
+              organization_token: '5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn'
+              group_name: "Daedalus project firemen"
+              role_name: "health_watcher"
   responses:
     '200':
       description: Success response
@@ -76,6 +98,10 @@ post:
               value:
                 status: 0
                 message: "Required group does not exist."
+            '8':
+              value:
+                status: 0
+                message: "Cannot remove this role, no more admin roles will left in this organization."
     '403':
       description: If organization user is not admin of that organization it receives the following response.
       content:
