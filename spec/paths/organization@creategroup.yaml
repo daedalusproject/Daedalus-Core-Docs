@@ -48,6 +48,8 @@ post:
                     properties:
                       group_name:
                         type: string
+                      group_token:
+                        type: string
               _hidden_data:
                 type: object
                 properties:
@@ -63,9 +65,10 @@ post:
               value:
                 data:
                   organization_groups:
-                    group_name":"Daedalus project firemen"
+                    group_name: "Daedalus project firemen"
+                    group_token: "XfJM7fbKhSHsqJ3PnLx3aSv6ipJxmmf2"
                 status: 1
-                message: "Organization grouphas been created."
+                message: "Organization group has been created."
                 _hidden_data:
                   organization_groups: 
                     id: 2
