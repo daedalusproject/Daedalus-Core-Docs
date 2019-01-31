@@ -32,11 +32,7 @@ delete:
                 properties:
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:

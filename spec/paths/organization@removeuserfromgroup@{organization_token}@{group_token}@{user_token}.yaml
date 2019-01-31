@@ -1,4 +1,23 @@
-post:
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
+  - name: user_token
+    in: path
+    description: Organization user Token
+    required: true
+    schema:
+      type: string
+delete:
   operationId: removeuserfromgroup-organizations
   tags:
     - Organization
@@ -6,24 +25,6 @@ post:
   description: Admin users are allowed remove users from its groups
   security:
     - token_security: []
-  requestBody:
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            user_email:
-              type: string
-            group_name:
-              type: string
-            organization_token:
-              type: string
-        examples:
-          '0':
-            value:
-              organization_token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
-              user_email: "other_admin@daedalus-project.io"
-              group_name: "Daedalus project firemen"
   responses:
     '200':
       description: Succeded response
@@ -37,11 +38,7 @@ post:
                 properties:
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -74,44 +71,16 @@ post:
             '1':
               value:
                 status: 0
-                message: "user_email is invalid."
+                message: "user_token is invalid."
             '2':
               value:
                 status: 0
-                message: "There is no registered user with that e-mail address."
+                message: "There is no registered user with that token."
             '3':
               value:
                 status: 0
                 message: "Invalid organization token."
             '4':
-              value:
-                status: 0
-                message: "There is no registered user with that e-mail address."
-            '5':
-              value:
-                status: 0
-                message: "There is no registered user with that e-mail address."
-            '6':
-              value:
-                status: 0
-                message: "Invalid organization token."
-            '7':
-              value:
-                status: 0
-                message: "No user_email provided."
-            '8':
-              value:
-                status: 0
-                message: "No group_name provided. No user_email provided."
-            '9':
-              value:
-                status: 0
-                message: "No session token provided."
-            '10':
-              value:
-                status: 0
-                message: "Session token expired."
-            '11':
               value:
                 status: 0
                 message: "Cannot remove this user, no more admin users will left in this organization."

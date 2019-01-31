@@ -59,6 +59,7 @@ post:
                       id:
                         type: string
                   user:
+                    type: object
                     $ref: '#/components/schemas/HiddenUserData'
           examples:
             '0':
