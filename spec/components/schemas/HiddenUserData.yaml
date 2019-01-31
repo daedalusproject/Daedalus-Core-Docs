@@ -4,3 +4,5 @@ properties:
     type: integer
   is_super_admin:
     type: integer
+  api_key:
+    type: string
