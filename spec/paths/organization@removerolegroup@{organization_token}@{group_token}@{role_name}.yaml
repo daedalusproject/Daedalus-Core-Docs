@@ -1,14 +1,33 @@
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
+  - name: role_name
+    in: path
+    description: Role
+    required: true
+    schema:
+      type: string
 delete:
-  operationId: removeuserfromgroup-organizations
+  operationId: removerolefromgroup-organizations
   tags:
     - Organization
-  summary: Remove user from group
-  description: Admin users are allowed remove users from its groups
+  summary: Remove role from group
+  description: Admin users are allowed remove roles from organization groups, if this action left no admins inside an organization it cannot be done.
   security:
     - token_security: []
   responses:
     '200':
-      description: Succeded response
+      description: Success response
       content:
         application/json:
           schema:
@@ -19,11 +38,7 @@ delete:
                 properties:
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -32,13 +47,13 @@ delete:
             '0':
               value:
                 status: 1
-                message: "Required user has been removed from organization group."
-                _hidden_data: 
-                  user: 
+                message: "Selected role has been removed from organization group."
+                _hidden_data:
+                  user:
                     id: 1
                     is_super_admin: 1
     '400':
-      description: Invalid request responses
+      description: Invalid request responses.
       content:
         application/json:
           schema:
@@ -52,41 +67,41 @@ delete:
             '0':
               value:
                 status: 0
-                message: "Required user does not belong to this group."
+                message: "Required role does not exist."
             '1':
               value:
                 status: 0
-                message: "user_email is invalid."
+                message: "Invalid organization token."
             '2':
               value:
                 status: 0
-                message: "There is no registered user with that e-mail address."
+                message: "Required role is not assigned to this group."
             '3':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "Required role does not exist."
             '4':
               value:
                 status: 0
-                message: "There is no registered user with that e-mail address."
+                message: "Invalid organization token."
             '5':
               value:
                 status: 0
-                message: "There is no registered user with that e-mail address."
+                message: "Required group does not exist."
             '6':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "Cannot remove this role, no more admin roles will left in this organization."
             '7':
               value:
                 status: 0
-                message: "No user_email provided."
+                message: "No session token provided."
             '8':
               value:
                 status: 0
-                message: "No group_name provided. No user_email provided."
+                message: "Session token expired."
     '403':
-      description: Non admin user request response
+      description: If organization user is not admin of that organization it receives the following response.
       content:
         application/json:
           schema:

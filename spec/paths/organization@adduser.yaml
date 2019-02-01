@@ -12,7 +12,7 @@
         schema:
           type: object
           required:
-            - user_email
+            - user_token
             - organization_token
           properties:
             user_email:
@@ -26,23 +26,15 @@
           '1':
             value:
               organization_token: invalidtoken
-              user_email: "Invalidemail"
+              user_token: "Invalidtoken"
           '2':
             value:
               organization_token: "invalidtoken"
-              user_email: "nonexisten@user.com"
-          '3':
-            value:
-              organization_token: "invalidtoken"
-              user_email: "existentuser@gmail.com"
-          '4':
-            value:
-              organization_token: "invalidtoken"
-              user_email: "alvaro.castellano.vela@gmail.com"
+              user_email: "invalidusertoken"
           '5':
             value:
               organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-              user_email: "alvaro.castellano.vela@gmail.com"
+              user_email: "4j2Qymr7tXyG4eAYBHLA3QPaxYH4dZAo"
   responses:
     '200':
       description: User has been added to organization
@@ -56,11 +48,7 @@
                 properties:
                   user:
                     type: object
-                    properties:
-                      id:
-                        type: integer
-                      is_super_admin:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -92,31 +80,35 @@
             '0':
               value:
                 status: 0
-                message: "No session token provided."
+                message: "No organization_token provided."
             '1':
               value:
                 status: 0
-                message: "No organization_token provided."
+                message: "No user_token provided."
             '2':
               value:
                 status: 0
-                message: "No user_email provided."
+                message: "user_tokenis invalid."
             '3':
-              value:
-                status: 0
-                message: "user_email is invalid."
-            '4':
                value:
                 status: 0
-                message: "There is no registered user with that e-mail address"
-            '5':
-              value:
-                status: 0
-                message: "Session token expired."
-            '6':
+                message: "There is no registered user with that token."
+            '4':
               value:
                 status: 0
                 message: "Invalid organization token."
+            '5':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '6':
+              value:
+                status: 0
+                message: "No session token provided."
+            '7':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: Non admin users of given organization are not allowed to add users to its organizations
       content:
@@ -135,4 +127,4 @@
             '0':
               value:
                 status: 0
-                message: "You are not a organization master of this organization."
+                message: "Your organization roles does not match with the following roles: organization master."

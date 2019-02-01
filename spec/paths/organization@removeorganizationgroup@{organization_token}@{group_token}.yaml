@@ -1,3 +1,16 @@
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
 delete:
   operationId: removegroup-organizations
   tags:
@@ -19,11 +32,7 @@ delete:
                 properties:
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -56,15 +65,27 @@ delete:
             '1':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "Session token invalid."
             '2':
               value:
                 status: 0
-                message: "No group_name provided."
+                message: "No session token provided."
             '3':
               value:
                 status: 0
+                message: "Invalid organization token."
+            '4':
+              value:
+                status: 0
+                message: "No group_name provided."
+            '5':
+              value:
+                status: 0
                 message: "Required group does not exist."
+            '6':
+              value:
+                status: 0
+                message: "Cannot remove this group, no more admin users will left in this organization."
     '403':
       description: Non admin user request response
       content:

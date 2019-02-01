@@ -36,32 +36,12 @@ post:
                   session_token:
                     type: string
                   user:
-                    type: object
-                    properties:
-                      is_admin:
-                        type: integer
-                      phone:
-                        type: string
-                      api_key:
-                        type: string
-                      surname:
-                        type: string
-                      name:
-                        type: string
-                      e-mail:
-                        type: string
-                      active:
-                        type: integer
+                    $ref: '#/components/schemas/UserData'
               _hidden_data:
                 type: object
                 properties:
                   user:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      is_super_admin:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -79,12 +59,13 @@ post:
                   is_admin: 1
                   phone: ""
                   surname: "User"
-                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                  token: "qARmcz4ZAmGiU8to1V6NREy4DoumgeS7"
               message: "Auth Successful."
               _hidden_data:
                 user:
                   is_super_admin: 1
                   id: 1
+                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
             '1':
               value:
                 status: 1
@@ -97,9 +78,8 @@ post:
                     active: 1
                     is_admin: 0
                     phone: ""
-                    api_key: "Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU"
+                    token: "Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU"
                 message: "Auth Successful."
-
     '400':
       description: Examples of invalid data
       content:
@@ -143,7 +123,7 @@ post:
               message:
                 type: string
                 enum:
-                  - Wrong e-mail or password.
+                  - "Wrong e-mail or password."
               status:
                 type: integer
                 enum:

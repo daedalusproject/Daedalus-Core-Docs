@@ -2,7 +2,7 @@ get:
   operationId: showusergroupsall-organizations
   tags:
     - Organization
-  summary: Show orgaization user groups
+  summary: Show all orgaizations user groups
   description: Users are allowed to list its organization groups.
   security:
     - token_security: []
@@ -30,7 +30,14 @@ get:
                       groups:
                         "Megashops Administrators":
                           users:
-                            - "admin@daedalus-project.io"
+                            "admin@daedalus-project.io":
+                              name: "Admin"
+                              surname: "User"
+                              e-mail: "admin@daedalus-project.io"
+                              is_admin: 1
+                              active: 1
+                              phone: ""
+                              token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                           roles: 
                             - "organization_master"
                     "Daedalus Project":
@@ -42,7 +49,14 @@ get:
                             - "organization_master"
                             - "daedalus_manager"
                           users:
-                            - "admin@daedalus-project.io"
+                            "admin@daedalus-project.io":
+                              name: "Admin"
+                              surname: "User"
+                              e-mail: "admin@daedalus-project.io"
+                              is_admin: 1
+                              active: 1
+                              phone: ""
+                              token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                 _hidden_data:
                   user:
                     id: 1
@@ -61,13 +75,14 @@ get:
                                   surname: "User"
                                   e-mail: "admin@daedalus-project.io"
                                   phone: ""
-                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
                                   is_admin: 1
                                   active: 1
+                                  token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                               _hidden_data:
                                 user:
                                   id: 1
                                   is_super_admin: 1
+                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
                       roles:
                         "daedalus_manager": 8
                         "organization_master": 1
@@ -83,13 +98,14 @@ get:
                                   surname: "User"
                                   e-mail: "admin@daedalus-project.io"
                                   phone: ""
-                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
                                   is_admin: 1
                                   active: 1
+                                  token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                               _hidden_data:
                                 user:
                                   id: 1
                                   is_super_admin: 1
+                                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
                           roles: 
                             "organization_master": 1
             '1':
@@ -103,7 +119,14 @@ get:
                         groups:
                           "Megashops Administrators":
                             users:
-                              - "admin@daedalus-project.io"
+                              "admin@daedalus-project.io":
+                                 name: "Admin"
+                                 surname: "User"
+                                 e-mail: "admin@daedalus-project.io"
+                                 phone: ""
+                                 is_admin: 1
+                                 active: 1
+                                 token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                             roles: 
                               - "organization_master"
             '2':
@@ -115,3 +138,23 @@ get:
                         name: "Megashops"
                         token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
                         groups:
+    '400':
+      description: Bad request examples
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '1':
+              value:
+                status: 0
+                message: "No session token provided."

@@ -14,6 +14,61 @@ get:
   security:
     - token_security: []
   responses:
+    '200':
+      description: Success response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                required:
+                  - users
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/UserData'
+              _hidden_data:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/HiddenUserData'
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HiddenActiveUserData'
+              status:
+                type: integer
+          examples:
+            '0':
+              value:
+                data:
+                  users:
+                    "other_admin@daedalus-project.io":
+                      name: "Other"
+                      surname: "User"
+                      e-mail: "other_admin@daedalus-project.io"
+                      phone: ""
+                      token: "HKbDvOWbzvZY8WeoUjHIrFX2psQMqr6E"
+                    "admin@daedalus-project.io":
+                      name: "Admin"
+                      surname: "User"
+                      e-mail: "admin@daedalus-project.io"
+                      phone: ""
+                      token: "vG2sXHZlJA5Pr8ahdT4ERsdgrEcTPlkh"
+                status: 1
+                _hidden_data:
+                  user:
+                    is_super_admin: 1
+                    id: 1
+                  users:
+                    "admin@daedalus-project.io": 
+                      id: 1
+                    "other_admin@daedalus-project.io":
+                      id: 2
     '400':
       description: Wrong organization token
       content:
@@ -30,6 +85,18 @@ get:
               value:
                 status: 0
                 message: "Invalid Organization token."
+            '1':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '2':
+              value:
+                status: 0
+                message: "No session token provided."
+            '3':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: I said only admins
       content:
@@ -45,8 +112,4 @@ get:
             '0':
               value:
                 status: 0
-                message: "You are not an admin user."
-
-
-
-
+                message: "Your organization roles does not match with the following roles: organization master."

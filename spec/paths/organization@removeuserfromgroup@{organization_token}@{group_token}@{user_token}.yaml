@@ -1,14 +1,33 @@
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
+  - name: user_token
+    in: path
+    description: Organization user Token
+    required: true
+    schema:
+      type: string
 delete:
-  operationId: removerolefromgroup-organizations
+  operationId: removeuserfromgroup-organizations
   tags:
     - Organization
-  summary: Remove role from group
-  description: Admin users are allowed remove roles from organization groups
+  summary: Remove user from group
+  description: Admin users are allowed remove users from its groups
   security:
     - token_security: []
   responses:
     '200':
-      description: Success response
+      description: Succeded response
       content:
         application/json:
           schema:
@@ -18,6 +37,7 @@ delete:
                 type: object
                 properties:
                   user:
+                    type: object
                     $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
@@ -27,13 +47,13 @@ delete:
             '0':
               value:
                 status: 1
-                message: "Selected role has been removed from organization group."
-                _hidden_data:
-                  user:
+                message: "Required user has been removed from organization group."
+                _hidden_data: 
+                  user: 
                     id: 1
                     is_super_admin: 1
     '400':
-      description: Invalid request responses.
+      description: Invalid request responses
       content:
         application/json:
           schema:
@@ -47,37 +67,25 @@ delete:
             '0':
               value:
                 status: 0
-                message: "Required role does not exist."
+                message: "Required user does not belong to this group."
             '1':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "user_token is invalid."
             '2':
               value:
                 status: 0
-                message: "No group_name provided. No role_name provided."
+                message: "There is no registered user with that token."
             '3':
               value:
                 status: 0
-                message: "Required role is not assigned to this group."
+                message: "Invalid organization token."
             '4':
               value:
                 status: 0
-                message: "Required role does not exist."
-            '5':
-              value:
-                status: 0
-                message: "Invalid organization token."
-            '6':
-              value:
-                status: 0
-                message: "No organization_token provided."
-            '7':
-              value:
-                status: 0
-                message: "Required group does not exist."
+                message: "Cannot remove this user, no more admin users will left in this organization."
     '403':
-      description: If organization user is not admin of that organization it receives the following response.
+      description: Non admin user request response
       content:
         application/json:
           schema:

@@ -24,7 +24,14 @@ get:
               data:
                 $ref: '#/components/schemas/OrganizationGroup'
               _hidden_data:
-                $ref: '#/components/schemas/HiddenOrganizationGroup'          
+                type: object
+                properties:
+                  groups:
+                    type: object
+                    $ref: '#/components/schemas/HiddenOrganizationGroup'
+                  user:
+                    type: object
+                    $ref: '#/components/schemas/HiddenUserData'
               status:
                 type: integer
           examples:
@@ -38,7 +45,15 @@ get:
                         - "organization_master"
                         - "daedalus_manager"
                       users:
-                        -  "admin@daedalus-project.io"
+                        "admin@daedalus-project.io":
+                          active: 1
+                          surname: "User"
+                          e-mail: "admin@daedalus-project.io"
+                          api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                          name: "Admin"
+                          is_admin: 1
+                          phone: ""
+                          token: "LLNbKFgAI0V71J4zJ3D9lAe9KOWk5FTN"
                 _hidden_data:
                   groups:
                     "Daedalus Super Administrators":
@@ -58,6 +73,7 @@ get:
                               name: "Admin"
                               is_admin: 1
                               phone: ""
+                              token: "LLNbKFgAI0V71J4zJ3D9lAe9KOWk5FTN"
                       roles:
                         "organization_master": 1
                         "daedalus_manager": 8
@@ -80,6 +96,18 @@ get:
               value:
                 status: 0
                 message: "Invalid organization token."
+            '1':
+              value:
+                status: 0
+                message: "Session token invalid."
+            '2':
+              value:
+                status: 0
+                message: "No session token provided."
+            '3':
+              value:
+                status: 0
+                message: "Session token expired."
     '403':
       description: If user belongs to required organization API response is forbidden.
       content:
