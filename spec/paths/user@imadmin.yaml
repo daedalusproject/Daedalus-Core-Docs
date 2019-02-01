@@ -24,9 +24,7 @@ get:
                 status: 1
                 message: You are an admin user.
     '400':
-      description: >-
-        Examples of failed requests because users did not provide their session
-        token or their session token has expired.
+      description: Examples of failed requests because users did not provide their session token or their session token has expired.
       content:
         application/json:
           schema:

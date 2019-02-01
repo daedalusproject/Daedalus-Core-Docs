@@ -50,12 +50,14 @@ get:
                       is_admin: 0
                       name: "Other"
                       e-mail: "other_admin@daedalus-project.io"
+                      token: "3B7IVsALA9vNz7jUGXGKKTbgXjSemM1M"
                 _hidden_data:
                   active_users:
                     "other_admin@daedalus-project.io":
                       auth_token: "J6um7yRJs0JnsTTGNbaSF2Ntl1sg5hLv2oVlZWqSXqn1SUbEUny0YzjHIa3i5UPR"
                       id: 2
                       is_super_admin: 0
+                      api_key: "7TKIbfFnwbbNwFmntbm1RCD1dPKkuh4i"
                   user:
                     id: 1
                     is_super_admin: 1}

@@ -59,12 +59,13 @@ post:
                   is_admin: 1
                   phone: ""
                   surname: "User"
-                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                  token: "qARmcz4ZAmGiU8to1V6NREy4DoumgeS7"
               message: "Auth Successful."
               _hidden_data:
                 user:
                   is_super_admin: 1
                   id: 1
+                  api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
             '1':
               value:
                 status: 1
@@ -77,9 +78,8 @@ post:
                     active: 1
                     is_admin: 0
                     phone: ""
-                    api_key: "Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU"
+                    token: "Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU"
                 message: "Auth Successful."
-
     '400':
       description: Examples of invalid data
       content:

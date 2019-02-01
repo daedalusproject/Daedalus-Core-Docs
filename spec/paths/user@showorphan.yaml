@@ -50,12 +50,14 @@ get:
                       name: "John"
                       is_admin: 0
                       email: "john@daedalus-project.io"
+                      token: "gtrtRLWPW4IzKEVBPo1arnqzvs2ZJCbg"
                 _hidden_data:
                   orphan_users:
                     john@daedalus-project.io:
                       id: 2
                       auth_token: "93OgYT6MLHpCdh6iLNNr17BRJflTRO4bcC//mVn6ncogyLInHMkKBn4CAauIe0Lg"
                       is_super_admin: 0
+                      api_key: "EvKXGYoCwGzMXP8Aqm5UN8qhQ1UYuijr"
                   user:
                     is_super_admin: 1
                     id: 1
