@@ -26,7 +26,14 @@ get:
               data:
                 $ref: '#/components/schemas/Organizations'
               _hidden_data:
-                $ref: '#/components/schemas/HiddenOrganizations'
+                type: object
+                properties:
+                  groups:
+                    type: object
+                    $ref: '#/components/schemas/HiddenOrganizationGroup'
+                  user:
+                    type: object
+                    $ref: '#/components/schemas/HiddenUserData'
           examples:
             '0':
               value:
@@ -35,7 +42,14 @@ get:
                   groups:
                     "Mega Shops Administrators":
                       users:
-                       - "admin@daedalus-project.io"
+                        "admin@daedalus-project.io":
+                          name: "Admin"
+                          surname: "User"
+                          e-mail: "admin@daedalus-project.io"
+                          is_admin: 1
+                          active: 1
+                          phone: ""
+                          token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                       roles:
                         - "organization_master"
                 _hidden_data:
@@ -60,6 +74,7 @@ get:
                               active: 1
                               api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
                               phone: ""
+                              token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
                       roles:
                         "organization_master": 1
             '1':
@@ -69,7 +84,16 @@ get:
                   groups:
                     "Daedalus project firemen":
                       users:
-                        - "other_admin@daedalus-project.io"
+                        "other_admin@daedalus-project.io":
+                          name: "Admin"
+                          surname: "other"
+                          e-mail: "other_admin@daedalus-project.io"
+                          is_admin: 1
+                          active: 1
+                          api_key: "jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p"
+                          phone: ""
+                          token: "SifmxHz2k4xg5VD0sjU3WmoAk49swtTO"
+
                       roles: []
     '400':
       description: If user provides an invalid organization token or an organization token of organization where user does not bellow return code is 400
@@ -99,4 +123,3 @@ get:
               value:
                 status: 0
                 message: "Session token expired."
-
