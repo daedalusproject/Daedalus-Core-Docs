@@ -75,6 +75,9 @@ post:
               value:
                 status: 1
                 message: "User has been registered."
+                data:
+                  new_user:
+                    token: "CtPoEaonht8cH6e5sS23IdGzad8LdbvG"
                 _hidden_data:
                   new_user:
                     email: "marvin@daedalus-project.io"
@@ -87,6 +90,9 @@ post:
               value:
                 status: 1
                 message: "User has been registered."
+                data:
+                  new_user:
+                    token: "CtPoEaonht8cH6e5sS23IdGzad8LdbvG"
     '400':
       description: Wrong data responses
       content:

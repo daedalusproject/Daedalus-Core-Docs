@@ -1,4 +1,23 @@
-post:
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
+  - name: role_name
+    in: path
+    description: Role
+    required: true
+    schema:
+      type: string
+delete:
   operationId: removerolefromgroup-organizations
   tags:
     - Organization
@@ -6,28 +25,6 @@ post:
   description: Admin users are allowed remove roles from organization groups, if this action left no admins inside an organization it cannot be done.
   security:
     - token_security: []
-  requestBody:
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-           - organization_token
-           - group_name
-           - role_name
-          properties:
-            organization_token: 
-              type: string
-            group_name:
-              type: string
-            role_name:
-              type: string
-        examples:
-          '0':
-            value:
-              organization_token: '5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn'
-              group_name: "Daedalus project firemen"
-              role_name: "health_watcher"
   responses:
     '200':
       description: Success response
@@ -40,6 +37,7 @@ post:
                 type: object
                 properties:
                   user:
+                    type: object
                     $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
@@ -77,36 +75,28 @@ post:
             '2':
               value:
                 status: 0
-                message: "No group_name provided. No role_name provided."
+                message: "Required role is not assigned to this group."
             '3':
               value:
                 status: 0
-                message: "Required role is not assigned to this group."
+                message: "Required role does not exist."
             '4':
               value:
                 status: 0
-                message: "Required role does not exist."
+                message: "Invalid organization token."
             '5':
               value:
                 status: 0
-                message: "Invalid organization token."
+                message: "Required group does not exist."
             '6':
               value:
                 status: 0
-                message: "No organization_token provided."
+                message: "Cannot remove this role, no more admin roles will left in this organization."
             '7':
               value:
                 status: 0
-                message: "Required group does not exist."
-            '8':
-              value:
-                status: 0
-                message: "Cannot remove this role, no more admin roles will left in this organization."
-            '9':
-              value:
-                status: 0
                 message: "No session token provided."
-            '10':
+            '8':
               value:
                 status: 0
                 message: "Session token expired."

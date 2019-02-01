@@ -5,8 +5,8 @@ required:
   - e-mail
   - is_admin
   - phone
-  - api_key
   - active
+  - token
 properties:
   name:
     type: string
@@ -14,11 +14,11 @@ properties:
     type: string
   e-mail:
     type: string
+  token:
+    type: string
   is_admin:
     type: integer
   phone:
     type: integer
-  api_key:
-    type: string
   active:
     type: integer

@@ -1,4 +1,17 @@
-post:
+parameters:
+  - name: organization_token
+    in: path
+    description: Organization Token
+    required: true
+    schema:
+      type: string
+  - name: group_token
+    in: path
+    description: Organization group Token
+    required: true
+    schema:
+      type: string
+delete:
   operationId: removegroup-organizations
   tags:
     - Organization
@@ -6,24 +19,6 @@ post:
   description: Admin users are allowed to remove entire organization groups
   security:
     - token_security: []
-  requestBody:
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-           - organization_token
-           - group_name
-          properties:
-            organization_token: 
-              type: string
-            group_name:
-              type: string
-        examples:
-          '0':
-            value:
-              organization_token: '5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn'
-              group_name: "Daedalus project firemen"
   responses:
     '200':
       description: Succeded response
@@ -37,11 +32,7 @@ post:
                 properties:
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:

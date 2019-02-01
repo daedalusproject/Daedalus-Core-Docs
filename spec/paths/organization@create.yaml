@@ -55,11 +55,7 @@ post:
                         type: string
                   user:
                     type: object
-                    properties:
-                      is_super_admin:
-                        type: integer
-                      id:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -76,7 +72,7 @@ post:
                     organization_token: "s.Q8Ymu8q/yqAgZtdAnxyN4Exrwldp0S"
                 _hidden_data:
                   organization:
-                    organization_id: 2}
+                    organization_id: 2
                   user: 
                     is_super_admin: 1
                     id: 1

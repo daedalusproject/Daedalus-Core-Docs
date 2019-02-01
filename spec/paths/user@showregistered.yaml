@@ -47,6 +47,7 @@ get:
                       active: 0
                       is_admin: 0
                       email: "john@daedalus-project.io"
+                      token: "omzMdKjAxfntYLKk0J3LBfAABFO8sp14"
                 _hidden_data:
                   registered_users:
                     john@daedalus-project.io:
@@ -67,12 +68,14 @@ get:
                       name: "John"
                       is_admin: 0
                       email: "john@daedalus-project.io"
+                      token: "2GAUDo6402Lg70gBG4z5RRZWqSKDlyvw"
                     marvin@daedalus-project.io:
                       email: "marvin@daedalus-project.io"
                       is_admin: 0,
                       name: "Marvin"
                       surname: "The Robot"
                       active: 0
+                      token: "E2FglGDC3uUv44LARyLIK7QI0ljMiSGH"
                 _hidden_data:
                   user:
                     is_super_admin: 1
@@ -82,10 +85,12 @@ get:
                       id: 3
                       auth_token: "FNIUcTWuD2QExGrDcg.FbvqwPRg0iOuAd1W/S33S9jizCynW3gzHt6ZkYxLOs2j"
                       is_super_admin: 0
+                      api_key: "JJ8bEAlqUt4Q3J2TfJTNf38vLs7rS5km"
                     john@daedalus-project.io:
                       id: 2
                       auth_token: "93OgYT6MLHpCdh6iLNNr17BRJflTRO4bcC//mVn6ncogyLInHMkKBn4CAauIe0Lg"
                       is_super_admin: 0
+                      api_key: "aC3JhLD24ogcSjyMUXUTBh7yIhMjj7xU"
     '403':
       description: I said only admins
       content:

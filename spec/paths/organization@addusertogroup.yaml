@@ -12,9 +12,9 @@
         schema:
           type: object
           properties:
-            user_email:
+            user_token:
               type: string
-            group_name:
+            group_token:
               type: string
             organization_token:
               type: string
@@ -25,38 +25,13 @@
           '1':
             value:
               organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-              group_name: "Invalid group name"
-              user_email: "invaliduser@email.com"
+              group_token: "Invalidgrouptoken"
+              user_token: "invalidusertoken"
           '2':
             value:
-                organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-                group_name: "Invalid group name"
-                user_email: "invaliduseremail.com"
-          '3':
-            value:
-                organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-                group_name: "Invalid group name"
-                user_email: "alvaro.castellano.vela@gmail.com"
-          '4':
-            value: >-
               organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-              group_name: "Daedalus Core Sysadmins"
-              user_email: "alvaro.castellano.vela@gmail.com"
-          '5':
-            value: >-
-              organization_token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn"
-              group_name: "Daedalus Core Sysadmins"
-              user_email: "alvaro.castellano.vela@gmail.com"
-          '6':
-            value: >-
-              organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-              group_name: "Megashops Sysadmins"
-              user_email: "alvaro.castellano.vela@gmail.com"
-          '7':
-            value:
-              organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku"
-              group_name: "Megashops Sysadmins"
-              user_email: "alvaro.castellano.vela@gmail.com"
+              group_token: "SKDw37rpbgNiTnvZr3V2gg2OnlhR51Hg"
+              user_token: "YUWQoEmihBQEmcJJ5IrQOZYDPAM2Vd1b"
   responses:
     '200':
       description: Success response
@@ -70,11 +45,7 @@
                 properties:
                   user:
                     type: object
-                    properties:
-                      id:
-                        type: integer
-                      is_super_admin:
-                        type: integer
+                    $ref: '#/components/schemas/HiddenUserData'
               message:
                 type: string
               status:
@@ -89,7 +60,7 @@
                    id: 1
                    is_super_admin: 1
     '400':
-      description: Auto generated using Swagger Inspector
+      description: Invalid Response, required data is invalid.
       content:
         application/json:
           schema:
@@ -111,11 +82,11 @@
             '2':
               value:
                 status: 0
-                message: "No group_name provided. No user_email provided."
+                message: "No group_token provided. No user_token provided."
             '3':
               value:
                 status: 0
-                message: "There is no registered user with that e-mail address."
+                message: "There is no registered user with that token."
             '4':
               value:
                 status: 0
@@ -127,24 +98,20 @@
             '6':
               value:
                 status: 0
-                message: "Required group does not exist."
+                message: "Invalid user."
             '7':
               value:
                 status: 0
-                message: "Invalid user."
+                message: "Required user is already assigned to this group."
             '8':
               value:
                 status: 0
-                message: "Required user is already assigned to this group."
+                message: "Session token invalid."
             '9':
               value:
                 status: 0
-                message: "Session token invalid."
-            '10':
-              value:
-                status: 0
                 message: "No session token provided."
-            '11':
+            '10':
               value:
                 status: 0
                 message: "Session token expired."

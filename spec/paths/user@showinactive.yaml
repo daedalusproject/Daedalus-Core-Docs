@@ -50,12 +50,14 @@ get:
                       email: "marvin@daedalus-project.io"
                       active: 0
                       is_admin: 0
+                      token: "npGAi5LRsK44BmAeasnd28EHdd5q70OA"
                 _hidden_data:
                   inactive_users:
                     marvin@daedalus-project.io:
                       id: 3
                       auth_token: "FNIUcTWuD2QExGrDcg.FbvqwPRg0iOuAd1W/S33S9jizCynW3gzHt6ZkYxLOs2j"
                       is_super_admin: 0
+                      api_key: "XE6Q9Ub4VTBaTkw09sdLQVKzI7OjraHt"
                   user:
                     is_super_admin: 1
                     id: 1
