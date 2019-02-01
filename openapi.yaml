@@ -43,7 +43,7 @@ paths:
               properties:
                 role_name:
                   type: string
-                group_name:
+                group_token:
                   type: string
                 organization_token:
                   type: string
@@ -54,27 +54,17 @@ paths:
               '1':
                 value:
                   organization_token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
-                  group_name: non existent group
+                  group_token: nonexistentgrouptoken
               '2':
                 value:
                   organization_token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
-                  group_name: non existent group
+                  group_token: NC5MQoQJjFkaWiQoeHodATK8hTeEyfsk
                   role_name: firemen
               '3':
                 value:
                   organization_token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
-                  group_name: Daedalus Core Sysadmins
+                  group_token: iBSe0mX3GU6GJPpyGpgKZJ9klPFUACpn
                   role_name: firemen
-              '4':
-                value:
-                  organization_token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
-                  group_name: Daedalus Core Sysadmins
-                  role_name: fireman
-              '5':
-                value:
-                  organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  group_name: Megashops Sysadmins
-                  role_name: fireman
       responses:
         '200':
           description: Success response
@@ -93,11 +83,7 @@ paths:
                             type: integer
                       user:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                          is_super_admin:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -132,27 +118,35 @@ paths:
                 '1':
                   value:
                     status: 0
-                    message: Invalid organization token.
+                    message: No group_name provided. No role_name provided.
                 '2':
                   value:
                     status: 0
-                    message: No group_name provided. No role_name provided.
+                    message: No role_name provided.
                 '3':
                   value:
                     status: 0
-                    message: No role_name provided.
+                    message: Required group does not exist.
                 '4':
                   value:
                     status: 0
-                    message: Required group does not exist.
+                    message: Required role does not exist.
                 '5':
                   value:
                     status: 0
-                    message: Required role does not exist.
+                    message: Required role is already assigned to this group.
                 '6':
                   value:
                     status: 0
-                    message: Required role is already assigned to this group.
+                    message: Session token invalid.
+                '7':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '8':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Non admin requests
           content:
@@ -184,7 +178,7 @@ paths:
             schema:
               type: object
               required:
-                - user_email
+                - user_token
                 - organization_token
               properties:
                 user_email:
@@ -198,23 +192,15 @@ paths:
               '1':
                 value:
                   organization_token: invalidtoken
-                  user_email: Invalidemail
+                  user_token: Invalidtoken
               '2':
                 value:
                   organization_token: invalidtoken
-                  user_email: nonexisten@user.com
-              '3':
-                value:
-                  organization_token: invalidtoken
-                  user_email: existentuser@gmail.com
-              '4':
-                value:
-                  organization_token: invalidtoken
-                  user_email: alvaro.castellano.vela@gmail.com
+                  user_email: invalidusertoken
               '5':
                 value:
                   organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  user_email: alvaro.castellano.vela@gmail.com
+                  user_email: 4j2Qymr7tXyG4eAYBHLA3QPaxYH4dZAo
       responses:
         '200':
           description: User has been added to organization
@@ -228,11 +214,7 @@ paths:
                     properties:
                       user:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                          is_super_admin:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -264,31 +246,35 @@ paths:
                 '0':
                   value:
                     status: 0
-                    message: No session token provided.
+                    message: No organization_token provided.
                 '1':
                   value:
                     status: 0
-                    message: No organization_token provided.
+                    message: No user_token provided.
                 '2':
                   value:
                     status: 0
-                    message: No user_email provided.
+                    message: user_tokenis invalid.
                 '3':
                   value:
                     status: 0
-                    message: user_email is invalid.
+                    message: There is no registered user with that token.
                 '4':
                   value:
                     status: 0
-                    message: There is no registered user with that e-mail address
+                    message: Invalid organization token.
                 '5':
                   value:
                     status: 0
-                    message: Session token expired.
+                    message: Session token invalid.
                 '6':
                   value:
                     status: 0
-                    message: Invalid organization token.
+                    message: No session token provided.
+                '7':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Non admin users of given organization are not allowed to add users to its organizations
           content:
@@ -307,7 +293,7 @@ paths:
                 '0':
                   value:
                     status: 0
-                    message: You are not a organization master of this organization.
+                    message: 'Your organization roles does not match with the following roles: organization master.'
   /organization/addusertogroup:
     post:
       operationId: addusertogroups-organizations
@@ -323,9 +309,9 @@ paths:
             schema:
               type: object
               properties:
-                user_email:
+                user_token:
                   type: string
-                group_name:
+                group_token:
                   type: string
                 organization_token:
                   type: string
@@ -336,29 +322,13 @@ paths:
               '1':
                 value:
                   organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  group_name: Invalid group name
-                  user_email: invaliduser@email.com
+                  group_token: Invalidgrouptoken
+                  user_token: invalidusertoken
               '2':
                 value:
                   organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  group_name: Invalid group name
-                  user_email: invaliduseremail.com
-              '3':
-                value:
-                  organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  group_name: Invalid group name
-                  user_email: alvaro.castellano.vela@gmail.com
-              '4':
-                value: 'organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku" group_name: "Daedalus Core Sysadmins" user_email: "alvaro.castellano.vela@gmail.com"'
-              '5':
-                value: 'organization_token: "5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn" group_name: "Daedalus Core Sysadmins" user_email: "alvaro.castellano.vela@gmail.com"'
-              '6':
-                value: 'organization_token: "kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku" group_name: "Megashops Sysadmins" user_email: "alvaro.castellano.vela@gmail.com"'
-              '7':
-                value:
-                  organization_token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                  group_name: Megashops Sysadmins
-                  user_email: alvaro.castellano.vela@gmail.com
+                  group_token: SKDw37rpbgNiTnvZr3V2gg2OnlhR51Hg
+                  user_token: YUWQoEmihBQEmcJJ5IrQOZYDPAM2Vd1b
       responses:
         '200':
           description: Success response
@@ -372,11 +342,7 @@ paths:
                     properties:
                       user:
                         type: object
-                        properties:
-                          id:
-                            type: integer
-                          is_super_admin:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -391,7 +357,7 @@ paths:
                         id: 1
                         is_super_admin: 1
         '400':
-          description: Auto generated using Swagger Inspector
+          description: 'Invalid Response, required data is invalid.'
           content:
             application/json:
               schema:
@@ -413,11 +379,11 @@ paths:
                 '2':
                   value:
                     status: 0
-                    message: No group_name provided. No user_email provided.
+                    message: No group_token provided. No user_token provided.
                 '3':
                   value:
                     status: 0
-                    message: There is no registered user with that e-mail address.
+                    message: There is no registered user with that token.
                 '4':
                   value:
                     status: 0
@@ -429,15 +395,23 @@ paths:
                 '6':
                   value:
                     status: 0
-                    message: Required group does not exist.
+                    message: Invalid user.
                 '7':
                   value:
                     status: 0
-                    message: Invalid user.
+                    message: Required user is already assigned to this group.
                 '8':
                   value:
                     status: 0
-                    message: Required user is already assigned to this group.
+                    message: Session token invalid.
+                '9':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '10':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Non admin user request response
           content:
@@ -476,15 +450,10 @@ paths:
             examples:
               '0':
                 value:
-                  organization_data:
-                    name: Mega Shops
+                  name: Mega Shops
               '1':
                 value:
-                  organization_data:
-                    name: Daedalus Project
-              '2':
-                value:
-                  organization_data: null
+                  name: Daedalus Project
       responses:
         '200':
           description: 'Sucess responses, superadmin also receives _hidden_data'
@@ -517,11 +486,7 @@ paths:
                             type: string
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -538,7 +503,7 @@ paths:
                         organization_token: s.Q8Ymu8q/yqAgZtdAnxyN4Exrwldp0S
                     _hidden_data:
                       organization:
-                        organization_id: '2}'
+                        organization_id: 2
                       user:
                         is_super_admin: 1
                         id: 1
@@ -567,6 +532,18 @@ paths:
                   value:
                     status: 0
                     message: Invalid organization data.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '3':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '4':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Non admin users are not allowed to create organizations
           content:
@@ -590,13 +567,268 @@ paths:
                   value:
                     status: 0
                     message: You are not an admin user.
-  /organization/removeorganizationgroup:
+  /organization/creategroup:
+    post:
+      operationId: creategroup-organizations
+      tags:
+        - Organization
+      summary: Create organiation group
+      description: Admin users are allowed to create organization groups
+      security:
+        - token_security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - organization_token
+                - group_name
+              properties:
+                organization_token:
+                  type: string
+                group_name:
+                  type: string
+            examples:
+              '0':
+                value:
+                  organization_token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
+                  group_name: Daedalus project firemen
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - data
+                  - message
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      organization_groups:
+                        type: object
+                        properties:
+                          group_name:
+                            type: string
+                          group_token:
+                            type: string
+                  _hidden_data:
+                    type: object
+                    properties:
+                      organization_groups:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                      user:
+                        type: object
+                        $ref: '#/components/schemas/HiddenUserData'
+              examples:
+                '0':
+                  value:
+                    data:
+                      organization_groups:
+                        group_name: Daedalus project firemen
+                        group_token: XfJM7fbKhSHsqJ3PnLx3aSv6ipJxmmf2
+                    status: 1
+                    message: Organization group has been created.
+                    _hidden_data:
+                      organization_groups:
+                        id: 2
+                      user:
+                        id: 1
+                        is_super_admin: 1
+        '400':
+          description: Invalid responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Invalid organization token.
+                '1':
+                  value:
+                    status: 0
+                    message: No group_name provided.
+                '2':
+                  value:
+                    status: 0
+                    message: No organization_token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '4':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '5':
+                  value:
+                    status: 0
+                    message: Session token expired.
+        '403':
+          description: Only admins are allowed to create groups
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: 'Your organization roles does not match with the following roles: organization master.'
+  '/organization/removeorganizationgroup/{organization_token}/{group_token}':
+    parameters:
+      - name: organization_token
+        in: path
+        description: Organization Token
+        required: true
+        schema:
+          type: string
+      - name: group_token
+        in: path
+        description: Organization group Token
+        required: true
+        schema:
+          type: string
+    delete:
+      operationId: removegroup-organizations
+      tags:
+        - Organization
+      summary: Remove gorup from organization
+      description: Admin users are allowed to remove entire organization groups
+      security:
+        - token_security: []
+      responses:
+        '200':
+          description: Succeded response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _hidden_data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        $ref: '#/components/schemas/HiddenUserData'
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 1
+                    message: Selected group has been removed from organization.
+                    _hidden_data:
+                      user:
+                        id: 1
+                        is_super_admin: 1
+        '400':
+          description: Invalid request responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Session token expired.
+                '1':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '2':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Invalid organization token.
+                '4':
+                  value:
+                    status: 0
+                    message: No group_name provided.
+                '5':
+                  value:
+                    status: 0
+                    message: Required group does not exist.
+                '6':
+                  value:
+                    status: 0
+                    message: 'Cannot remove this group, no more admin users will left in this organization.'
+        '403':
+          description: Non admin user request response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: 'Your organization roles does not match with the following roles: organization master.'
+  '/organization/removerolegroup/{organization_token}/{group_token}/{role_name}':
+    parameters:
+      - name: organization_token
+        in: path
+        description: Organization Token
+        required: true
+        schema:
+          type: string
+      - name: group_token
+        in: path
+        description: Organization group Token
+        required: true
+        schema:
+          type: string
+      - name: role_name
+        in: path
+        description: Role
+        required: true
+        schema:
+          type: string
     delete:
       operationId: removerolefromgroup-organizations
       tags:
         - Organization
       summary: Remove role from group
-      description: Admin users are allowed remove roles from organization groups
+      description: 'Admin users are allowed remove roles from organization groups, if this action left no admins inside an organization it cannot be done.'
       security:
         - token_security: []
       responses:
@@ -611,6 +843,7 @@ paths:
                     type: object
                     properties:
                       user:
+                        type: object
                         $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
@@ -648,27 +881,31 @@ paths:
                 '2':
                   value:
                     status: 0
-                    message: No group_name provided. No role_name provided.
+                    message: Required role is not assigned to this group.
                 '3':
                   value:
                     status: 0
-                    message: Required role is not assigned to this group.
+                    message: Required role does not exist.
                 '4':
                   value:
                     status: 0
-                    message: Required role does not exist.
+                    message: Invalid organization token.
                 '5':
                   value:
                     status: 0
-                    message: Invalid organization token.
+                    message: Required group does not exist.
                 '6':
                   value:
                     status: 0
-                    message: No organization_token provided.
+                    message: 'Cannot remove this role, no more admin roles will left in this organization.'
                 '7':
                   value:
                     status: 0
-                    message: Required group does not exist.
+                    message: No session token provided.
+                '8':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: If organization user is not admin of that organization it receives the following response.
           content:
@@ -685,91 +922,26 @@ paths:
                   value:
                     status: 0
                     message: 'Your organization roles does not match with the following roles: organization master.'
-  /organization/removerolegroup:
-    delete:
-      operationId: removegroup-organizations
-      tags:
-        - Organization
-      summary: Remove gorup from organization
-      description: Admin users are allowed to remove entire organization groups
-      security:
-        - token_security: []
-      responses:
-        '200':
-          description: Succeded response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  _hidden_data:
-                    type: object
-                    properties:
-                      user:
-                        type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
-                  message:
-                    type: string
-                  status:
-                    type: integer
-              examples:
-                '0':
-                  value:
-                    status: 1
-                    message: Selected group has been removed from organization.
-                    _hidden_data:
-                      user:
-                        id: 1
-                        is_super_admin: 1
-        '400':
-          description: Invalid request responses
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  status:
-                    type: integer
-              examples:
-                '0':
-                  value:
-                    status: 0
-                    message: Session token expired.
-                '1':
-                  value:
-                    status: 0
-                    message: Invalid organization token.
-                '2':
-                  value:
-                    status: 0
-                    message: No group_name provided.
-                '3':
-                  value:
-                    status: 0
-                    message: Required group does not exist.
-        '403':
-          description: Non admin user request response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                  status:
-                    type: integer
-              examples:
-                '0':
-                  value:
-                    status: 0
-                    message: 'Your organization roles does not match with the following roles: organization master.'
-  /organization/removeuserfromgroup:
+  '/organization/removeuserfromgroup/{organization_token}/{group_token}/{user_token}':
+    parameters:
+      - name: organization_token
+        in: path
+        description: Organization Token
+        required: true
+        schema:
+          type: string
+      - name: group_token
+        in: path
+        description: Organization group Token
+        required: true
+        schema:
+          type: string
+      - name: user_token
+        in: path
+        description: Organization user Token
+        required: true
+        schema:
+          type: string
     delete:
       operationId: removeuserfromgroup-organizations
       tags:
@@ -791,11 +963,7 @@ paths:
                     properties:
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -828,11 +996,11 @@ paths:
                 '1':
                   value:
                     status: 0
-                    message: user_email is invalid.
+                    message: user_token is invalid.
                 '2':
                   value:
                     status: 0
-                    message: There is no registered user with that e-mail address.
+                    message: There is no registered user with that token.
                 '3':
                   value:
                     status: 0
@@ -840,23 +1008,7 @@ paths:
                 '4':
                   value:
                     status: 0
-                    message: There is no registered user with that e-mail address.
-                '5':
-                  value:
-                    status: 0
-                    message: There is no registered user with that e-mail address.
-                '6':
-                  value:
-                    status: 0
-                    message: Invalid organization token.
-                '7':
-                  value:
-                    status: 0
-                    message: No user_email provided.
-                '8':
-                  value:
-                    status: 0
-                    message: No group_name provided. No user_email provided.
+                    message: 'Cannot remove this user, no more admin users will left in this organization.'
         '403':
           description: Non admin user request response
           content:
@@ -918,11 +1070,7 @@ paths:
                               type: integer
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   status:
                     type: integer
               examples:
@@ -949,7 +1097,31 @@ paths:
                     status: 1
                     data:
                       organizations: null
-  '/organization/showoallgroups/{organization_token}':
+        '400':
+          description: There is a problem with session token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token expired.
+  '/organization/showallgroups/{organization_token}':
     parameters:
       - name: organization_token
         in: path
@@ -976,7 +1148,14 @@ paths:
                   data:
                     $ref: '#/components/schemas/OrganizationGroup'
                   _hidden_data:
-                    $ref: '#/components/schemas/HiddenOrganizationGroup'
+                    type: object
+                    properties:
+                      groups:
+                        type: object
+                        $ref: '#/components/schemas/HiddenOrganizationGroup'
+                      user:
+                        type: object
+                        $ref: '#/components/schemas/HiddenUserData'
                   status:
                     type: integer
               examples:
@@ -990,7 +1169,15 @@ paths:
                             - organization_master
                             - daedalus_manager
                           users:
-                            - admin@daedalus-project.io
+                            admin@daedalus-project.io:
+                              active: 1
+                              surname: User
+                              e-mail: admin@daedalus-project.io
+                              api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
+                              name: Admin
+                              is_admin: 1
+                              phone: ''
+                              token: LLNbKFgAI0V71J4zJ3D9lAe9KOWk5FTN
                     _hidden_data:
                       groups:
                         Daedalus Super Administrators:
@@ -1010,6 +1197,7 @@ paths:
                                   name: Admin
                                   is_admin: 1
                                   phone: ''
+                                  token: LLNbKFgAI0V71J4zJ3D9lAe9KOWk5FTN
                           roles:
                             organization_master: 1
                             daedalus_manager: 8
@@ -1032,6 +1220,18 @@ paths:
                   value:
                     status: 0
                     message: Invalid organization token.
+                '1':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '2':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: If user belongs to required organization API response is forbidden.
           content:
@@ -1048,12 +1248,137 @@ paths:
                   value:
                     status: 0
                     message: 'Your organization roles does not match with the following roles: organization master.'
+  '/organization/showorganizationusergroups/{organization_token}':
+    parameters:
+      - name: organization_token
+        in: path
+        description: Organization Token
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: showorganizationusergroups-organization
+      tags:
+        - Organization
+      summary: Show all organization groups
+      description: Show required user organization groups
+      security:
+        - token_security: []
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  data:
+                    $ref: '#/components/schemas/Organizations'
+                  _hidden_data:
+                    type: object
+                    properties:
+                      groups:
+                        type: object
+                        $ref: '#/components/schemas/HiddenOrganizationGroup'
+                      user:
+                        type: object
+                        $ref: '#/components/schemas/HiddenUserData'
+              examples:
+                '0':
+                  value:
+                    status: 1
+                    data:
+                      groups:
+                        Mega Shops Administrators:
+                          users:
+                            admin@daedalus-project.io:
+                              name: Admin
+                              surname: User
+                              e-mail: admin@daedalus-project.io
+                              is_admin: 1
+                              active: 1
+                              phone: ''
+                              token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
+                          roles:
+                            - organization_master
+                    _hidden_data:
+                      user:
+                        id: 1
+                        is_super_admin: 1
+                      groups:
+                        Mega Shops Administrators:
+                          id: 3
+                          users:
+                            admin@daedalus-project.io:
+                              _hidden_data:
+                                user:
+                                  is_super_admin: 1
+                                  id: 1
+                              data:
+                                user:
+                                  name: Admin
+                                  surname: User
+                                  e-mail: admin@daedalus-project.io
+                                  is_admin: 1
+                                  active: 1
+                                  api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
+                                  phone: ''
+                                  token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
+                          roles:
+                            organization_master: 1
+                '1':
+                  value:
+                    status: 1
+                    data:
+                      groups:
+                        Daedalus project firemen:
+                          users:
+                            other_admin@daedalus-project.io:
+                              name: Admin
+                              surname: other
+                              e-mail: other_admin@daedalus-project.io
+                              is_admin: 1
+                              active: 1
+                              api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
+                              phone: ''
+                              token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
+                          roles: []
+        '400':
+          description: If user provides an invalid organization token or an organization token of organization where user does not bellow return code is 400
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    status: '0,'
+                    message: Invalid organization token.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token expired.
   /organization/showusergroups:
     get:
       operationId: showusergroupsall-organizations
       tags:
         - Organization
-      summary: Show orgaization user groups
+      summary: Show all orgaizations user groups
       description: Users are allowed to list its organization groups.
       security:
         - token_security: []
@@ -1081,7 +1406,14 @@ paths:
                           groups:
                             Megashops Administrators:
                               users:
-                                - admin@daedalus-project.io
+                                admin@daedalus-project.io:
+                                  name: Admin
+                                  surname: User
+                                  e-mail: admin@daedalus-project.io
+                                  is_admin: 1
+                                  active: 1
+                                  phone: ''
+                                  token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
                               roles:
                                 - organization_master
                         Daedalus Project:
@@ -1093,7 +1425,14 @@ paths:
                                 - organization_master
                                 - daedalus_manager
                               users:
-                                - admin@daedalus-project.io
+                                admin@daedalus-project.io:
+                                  name: Admin
+                                  surname: User
+                                  e-mail: admin@daedalus-project.io
+                                  is_admin: 1
+                                  active: 1
+                                  phone: ''
+                                  token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
                     _hidden_data:
                       user:
                         id: 1
@@ -1112,13 +1451,14 @@ paths:
                                       surname: User
                                       e-mail: admin@daedalus-project.io
                                       phone: ''
-                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
                                       is_admin: 1
                                       active: 1
+                                      token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
                                   _hidden_data:
                                     user:
                                       id: 1
                                       is_super_admin: 1
+                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
                           roles:
                             daedalus_manager: 8
                             organization_master: 1
@@ -1134,13 +1474,14 @@ paths:
                                       surname: User
                                       e-mail: admin@daedalus-project.io
                                       phone: ''
-                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
                                       is_admin: 1
                                       active: 1
+                                      token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
                                   _hidden_data:
                                     user:
                                       id: 1
                                       is_super_admin: 1
+                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
                               roles:
                                 organization_master: 1
                 '1':
@@ -1154,7 +1495,14 @@ paths:
                           groups:
                             Megashops Administrators:
                               users:
-                                - admin@daedalus-project.io
+                                admin@daedalus-project.io:
+                                  name: Admin
+                                  surname: User
+                                  e-mail: admin@daedalus-project.io
+                                  phone: ''
+                                  is_admin: 1
+                                  active: 1
+                                  token: SifmxHz2k4xg5VD0sjU3WmoAk49swtTO
                               roles:
                                 - organization_master
                 '2':
@@ -1166,107 +1514,26 @@ paths:
                           name: Megashops
                           token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
                           groups: null
-  '/organization/showusergroups/{organization_token}':
-    parameters:
-      - name: organization_token
-        in: path
-        description: Organization Token
-        required: true
-        schema:
-          type: string
-    get:
-      operationId: showgroup-organizations
-      tags:
-        - Organization
-      summary: Show orgaization user groups
-      description: Users are allowed to list its groups belonging required organization.
-      security:
-        - token_security: []
-      responses:
-        '200':
-          description: Common response
+        '400':
+          description: Bad request examples
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  data:
-                    $ref: '#/components/schemas/Organizations'
-                  _hidden_data:
-                    $ref: '#/components/schemas/HiddenOrganizations'
+                  message:
+                    type: string
+                  status:
+                    type: integer
               examples:
                 '0':
                   value:
-                    status: 1
-                    data:
-                      organizations:
-                        Megashops:
-                          name: Megashops
-                          token: kCZKBk5KvHz5bCX9xwfUOLVvyRbbj5Ku
-                          groups:
-                            Megashops Administrators:
-                              users:
-                                - admin@daedalus-project.io
-                              roles:
-                                - organization_master
-                        Daedalus Project:
-                          name: Daedalus Project
-                          token: 5XJD38czqtm8ieh8TvrBRXlvAD7JM6Nn
-                          groups:
-                            Daedalus Super Administrators:
-                              roles:
-                                - organization_master
-                                - daedalus_manager
-                              users:
-                                - admin@daedalus-project.io
-                    _hidden_data:
-                      user:
-                        is_super_admin: 1
-                        id: 1
-                      organizations:
-                        Daedalus Project:
-                          id: 1
-                          groups:
-                            Daedalus Super Administrators:
-                              users:
-                                admin@daedalus-project.io:
-                                  data:
-                                    user:
-                                      e-mail: admin@daedalus-project.io
-                                      phone: ''
-                                      surname: User
-                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
-                                      is_admin: 1
-                                      name: Admin
-                                      active: 1
-                                  _hidden_data:
-                                    user:
-                                      id: 1
-                                      is_super_admin: 1
-                              roles:
-                                daedalus_manager: 8
-                                organization_master: 1
-                        Megashops:
-                          id: 2
-                          groups:
-                            Megashops Administrators:
-                              users:
-                                admin@daedalus-project.io:
-                                  data:
-                                    user:
-                                      e-mail: admin@daedalus-project.io
-                                      phone: ''
-                                      surname: User
-                                      api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
-                                      is_admin: 1
-                                      name: Admin
-                                      active: 1
-                                  _hidden_data:
-                                    user:
-                                      id: 1
-                                      is_super_admin: 1
-                              roles:
-                                organization_master: 1
+                    status: 0
+                    message: Session token invalid.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
   '/organization/showusers/{organization_token}':
     parameters:
       - name: organization_token
@@ -1284,6 +1551,61 @@ paths:
       security:
         - token_security: []
       responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - users
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          $ref: '#/components/schemas/UserData'
+                  _hidden_data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/HiddenUserData'
+                      users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/HiddenActiveUserData'
+                  status:
+                    type: integer
+              examples:
+                '0':
+                  value:
+                    data:
+                      users:
+                        other_admin@daedalus-project.io:
+                          name: Other
+                          surname: User
+                          e-mail: other_admin@daedalus-project.io
+                          phone: ''
+                          token: HKbDvOWbzvZY8WeoUjHIrFX2psQMqr6E
+                        admin@daedalus-project.io:
+                          name: Admin
+                          surname: User
+                          e-mail: admin@daedalus-project.io
+                          phone: ''
+                          token: vG2sXHZlJA5Pr8ahdT4ERsdgrEcTPlkh
+                    status: 1
+                    _hidden_data:
+                      user:
+                        is_super_admin: 1
+                        id: 1
+                      users:
+                        admin@daedalus-project.io:
+                          id: 1
+                        other_admin@daedalus-project.io:
+                          id: 2
         '400':
           description: Wrong organization token
           content:
@@ -1300,6 +1622,18 @@ paths:
                   value:
                     status: 0
                     message: Invalid Organization token.
+                '1':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '2':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: I said only admins
           content:
@@ -1315,7 +1649,7 @@ paths:
                 '0':
                   value:
                     status: 0
-                    message: You are not an admin user.
+                    message: 'Your organization roles does not match with the following roles: organization master.'
   /ping:
     get:
       tags:
@@ -1537,32 +1871,12 @@ paths:
                       session_token:
                         type: string
                       user:
-                        type: object
-                        properties:
-                          is_admin:
-                            type: integer
-                          phone:
-                            type: string
-                          api_key:
-                            type: string
-                          surname:
-                            type: string
-                          name:
-                            type: string
-                          e-mail:
-                            type: string
-                          active:
-                            type: integer
+                        $ref: '#/components/schemas/UserData'
                   _hidden_data:
                     type: object
                     properties:
                       user:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          is_super_admin:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
                   message:
                     type: string
                   status:
@@ -1580,12 +1894,13 @@ paths:
                         is_admin: 1
                         phone: ''
                         surname: User
-                        api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
+                        token: qARmcz4ZAmGiU8to1V6NREy4DoumgeS7
                     message: Auth Successful.
                     _hidden_data:
                       user:
                         is_super_admin: 1
                         id: 1
+                        api_key: jHkE6BcnNNYIQFGlJiYzrRVo6Feypv5p
                 '1':
                   value:
                     status: 1
@@ -1598,7 +1913,7 @@ paths:
                         active: 1
                         is_admin: 0
                         phone: ''
-                        api_key: Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU
+                        token: Jwm.NuibXnNM.z89c6CHsknxlEXf3UGU
                     message: Auth Successful.
         '400':
           description: Examples of invalid data
@@ -1731,6 +2046,9 @@ paths:
                   value:
                     status: 1
                     message: User has been registered.
+                    data:
+                      new_user:
+                        token: CtPoEaonht8cH6e5sS23IdGzad8LdbvG
                     _hidden_data:
                       new_user:
                         email: marvin@daedalus-project.io
@@ -1743,6 +2061,9 @@ paths:
                   value:
                     status: 1
                     message: User has been registered.
+                    data:
+                      new_user:
+                        token: CtPoEaonht8cH6e5sS23IdGzad8LdbvG
         '400':
           description: Wrong data responses
           content:
@@ -1771,10 +2092,18 @@ paths:
                   value:
                     status: 0
                     message: There already exists a user using this e-mail.
-                    _hidden_data:
-                      user:
-                        id: 1
-                        is_super_admin: 1
+                '1':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '2':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Non admin user response
           content:
@@ -1821,49 +2150,21 @@ paths:
                   data:
                     type: object
                     required:
-                      - data
+                      - active_users
                     properties:
                       active_users:
                         type: array
                         items:
-                          type: object
-                          required:
-                            - is_admin
-                            - surname
-                            - name
-                            - email
-                          properties:
-                            is_admin:
-                              type: integer
-                            surname:
-                              type: string
-                            name:
-                              type: string
-                            active:
-                              type: integer
-                            email:
-                              type: string
+                          $ref: '#/components/schemas/UserData'
                   _hidden_data:
                     type: object
                     properties:
                       active_users:
                         type: array
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            is_super_admin:
-                              type: integer
-                            auth_token:
-                              type: string
+                          $ref: '#/components/schemas/HiddenActiveUserData'
                       user:
-                        type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
               examples:
                 '0':
                   value:
@@ -1876,15 +2177,52 @@ paths:
                           is_admin: 0
                           name: Other
                           e-mail: other_admin@daedalus-project.io
+                          token: 3B7IVsALA9vNz7jUGXGKKTbgXjSemM1M
                     _hidden_data:
                       active_users:
                         other_admin@daedalus-project.io:
                           auth_token: J6um7yRJs0JnsTTGNbaSF2Ntl1sg5hLv2oVlZWqSXqn1SUbEUny0YzjHIa3i5UPR
                           id: 2
                           is_super_admin: 0
+                          api_key: 7TKIbfFnwbbNwFmntbm1RCD1dPKkuh4i
                       user:
                         id: 1
                         is_super_admin: '1}'
+        '400':
+          description: Requests without session token
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - No session token provided.
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '1':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '2':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '3':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: I said only andmins
           content:
@@ -1925,8 +2263,11 @@ paths:
               schema:
                 type: object
                 required:
+                  - status
                   - data
                 properties:
+                  status:
+                    type: integer
                   data:
                     type: object
                     required:
@@ -1935,47 +2276,17 @@ paths:
                       inactive_users:
                         type: array
                         items:
-                          type: object
-                          required:
-                            - is_admin
-                            - surname
-                            - name
-                            - active
-                            - email
-                          properties:
-                            is_admin:
-                              type: integer
-                            surname:
-                              type: string
-                            name:
-                              type: string
-                            active:
-                              type: integer
-                            email:
-                              type: string
+                          $ref: '#/components/schemas/UserData'
                   _hidden_data:
                     type: object
                     properties:
                       inactive_users:
                         type: array
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            is_super_admin:
-                              type: integer
-                            auth_token:
-                              type: string
+                          $ref: '#/components/schemas/HiddenUserData'
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
-                  status:
-                    type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
               examples:
                 '0':
                   value:
@@ -1988,15 +2299,48 @@ paths:
                           email: marvin@daedalus-project.io
                           active: 0
                           is_admin: 0
+                          token: npGAi5LRsK44BmAeasnd28EHdd5q70OA
                     _hidden_data:
                       inactive_users:
                         marvin@daedalus-project.io:
                           id: 3
                           auth_token: FNIUcTWuD2QExGrDcg.FbvqwPRg0iOuAd1W/S33S9jizCynW3gzHt6ZkYxLOs2j
                           is_super_admin: 0
+                          api_key: XE6Q9Ub4VTBaTkw09sdLQVKzI7OjraHt
                       user:
                         is_super_admin: 1
                         id: 1
+        '400':
+          description: Requests without session token
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - No session token provided.
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: I said only admins
           content:
@@ -2038,57 +2382,29 @@ paths:
                 type: object
                 required:
                   - data
+                  - status
                 properties:
+                  status:
+                    type: integer
                   data:
                     type: object
                     required:
-                      - orphan_users
+                      - inactive_users
                     properties:
-                      orphan_users:
+                      inactive_users:
                         type: array
                         items:
-                          type: object
-                          required:
-                            - is_admin
-                            - surname
-                            - name
-                            - active
-                            - email
-                          properties:
-                            is_admin:
-                              type: integer
-                            surname:
-                              type: string
-                            name:
-                              type: string
-                            active:
-                              type: integer
-                            email:
-                              type: string
+                          $ref: '#/components/schemas/UserData'
                   _hidden_data:
                     type: object
                     properties:
+                      inactive_users:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/HiddenUserData'
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
-                      orphan_users:
-                        type: object
-                        properties:
-                          john@daedalus-project.io:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                              is_super_admin:
-                                type: integer
-                              auth_token:
-                                type: string
-                  status:
-                    type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
               examples:
                 '0':
                   value:
@@ -2101,15 +2417,48 @@ paths:
                           name: John
                           is_admin: 0
                           email: john@daedalus-project.io
+                          token: gtrtRLWPW4IzKEVBPo1arnqzvs2ZJCbg
                     _hidden_data:
                       orphan_users:
                         john@daedalus-project.io:
                           id: 2
                           auth_token: 93OgYT6MLHpCdh6iLNNr17BRJflTRO4bcC//mVn6ncogyLInHMkKBn4CAauIe0Lg
                           is_super_admin: 0
+                          api_key: EvKXGYoCwGzMXP8Aqm5UN8qhQ1UYuijr
                       user:
                         is_super_admin: 1
                         id: 1
+        '400':
+          description: Requests without session token
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - No session token provided.
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: Only admin users
           content:
@@ -2146,55 +2495,27 @@ paths:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: integer
                   data:
                     type: object
+                    required:
+                      - inactive_users
                     properties:
-                      registered_users:
+                      inactive_users:
                         type: array
                         items:
-                          type: object
-                          required:
-                            - is_admin
-                            - surname
-                            - name
-                            - active
-                            - email
-                          properties:
-                            is_admin:
-                              type: integer
-                            surname:
-                              type: string
-                            name:
-                              type: string
-                            active:
-                              type: integer
-                            email:
-                              type: string
+                          $ref: '#/components/schemas/UserData'
                   _hidden_data:
                     type: object
                     properties:
-                      registered_users:
+                      inactive_users:
                         type: array
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                            is_super_admin:
-                              type: integer
-                            auth_token:
-                              type: string
+                          $ref: '#/components/schemas/HiddenUserData'
                       user:
                         type: object
-                        properties:
-                          is_super_admin:
-                            type: integer
-                          id:
-                            type: integer
-                  message:
-                    type: string
-                  status:
-                    type: integer
+                        $ref: '#/components/schemas/HiddenUserData'
               examples:
                 '0':
                   value:
@@ -2207,6 +2528,7 @@ paths:
                           active: 0
                           is_admin: 0
                           email: john@daedalus-project.io
+                          token: omzMdKjAxfntYLKk0J3LBfAABFO8sp14
                     _hidden_data:
                       registered_users:
                         john@daedalus-project.io:
@@ -2227,12 +2549,14 @@ paths:
                           name: John
                           is_admin: 0
                           email: john@daedalus-project.io
+                          token: 2GAUDo6402Lg70gBG4z5RRZWqSKDlyvw
                         marvin@daedalus-project.io:
                           email: marvin@daedalus-project.io
                           is_admin: '0,'
                           name: Marvin
                           surname: The Robot
                           active: 0
+                          token: E2FglGDC3uUv44LARyLIK7QI0ljMiSGH
                     _hidden_data:
                       user:
                         is_super_admin: 1
@@ -2242,10 +2566,43 @@ paths:
                           id: 3
                           auth_token: FNIUcTWuD2QExGrDcg.FbvqwPRg0iOuAd1W/S33S9jizCynW3gzHt6ZkYxLOs2j
                           is_super_admin: 0
+                          api_key: JJ8bEAlqUt4Q3J2TfJTNf38vLs7rS5km
                         john@daedalus-project.io:
                           id: 2
                           auth_token: 93OgYT6MLHpCdh6iLNNr17BRJflTRO4bcC//mVn6ncogyLInHMkKBn4CAauIe0Lg
                           is_super_admin: 0
+                          api_key: aC3JhLD24ogcSjyMUXUTBh7yIhMjj7xU
+        '400':
+          description: Requests without session token
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                  - status
+                properties:
+                  message:
+                    type: string
+                    enum:
+                      - No session token provided.
+                  status:
+                    type: integer
+                    enum:
+                      - 0
+              examples:
+                '0':
+                  value:
+                    status: 0
+                    message: Session token invalid.
+                '1':
+                  value:
+                    status: 0
+                    message: No session token provided.
+                '2':
+                  value:
+                    status: 0
+                    message: Session token expired.
         '403':
           description: I said only admins
           content:
@@ -2264,6 +2621,15 @@ paths:
                     message: You are not an admin user.
 components:
   schemas:
+    HiddenActiveUserData:
+      type: object
+      properties:
+        id:
+          type: integer
+        is_super_admin:
+          type: integer
+        api_key:
+          type: string
     HiddenOrganization:
       type: object
       properties:
@@ -2300,6 +2666,8 @@ components:
           type: integer
         is_super_admin:
           type: integer
+        api_key:
+          type: string
     Organization:
       type: object
       properties:
@@ -2317,7 +2685,7 @@ components:
         users:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/UserData'
         roles:
           type: array
           items:
@@ -2333,20 +2701,28 @@ components:
       example: pong
     UserData:
       type: object
+      required:
+        - name
+        - surname
+        - e-mail
+        - is_admin
+        - phone
+        - active
+        - token
       properties:
-        e-mail:
-          type: string
         name:
           type: string
         surname:
           type: string
+        e-mail:
+          type: string
+        token:
+          type: string
         is_admin:
           type: integer
-        api_key:
-          type: string
-        active:
-          type: integer
         phone:
+          type: integer
+        active:
           type: integer
   headers:
     ExpiresAfter:
