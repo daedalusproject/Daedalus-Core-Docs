@@ -36,7 +36,7 @@ post:
                   session_token:
                     type: string
                   user:
-                    $ref: '#/components/schemas/UserData'
+                    $ref: '#/components/schemas/LoggedUserData'
               _hidden_data:
                 type: object
                 properties:
