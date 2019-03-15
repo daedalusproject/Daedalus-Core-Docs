@@ -15,5 +15,7 @@ build_develop_image:
     script:
         - npm install
         - npm run build
-        - docker build --network=host --no-cache -t daedalus-core-docs-develop -f containers/develop/Dockerfile .
-
+    artifacts:
+        paths:
+        - web_deploy
+        expire_in: 10 minutes
