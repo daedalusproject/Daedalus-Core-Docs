@@ -27,5 +27,5 @@ deploy_develop_image:
     image: docker:stable
     script:
         - ls -lahrt
-     build_api_docs:
+    dependencies:
     - build_api_docs
