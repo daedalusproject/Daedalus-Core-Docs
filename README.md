@@ -9,6 +9,7 @@
 ## Docker Image
 
 Release Image [![Release Image](https://img.shields.io/badge/docker-latest-blue.svg)](https://hub.docker.com/r/daedalusproject/daedalus-core-docs)
+
 Develop [![Develop](https://img.shields.io/badge/docker-latest-yellow.svg)](https://hub.docker.com/r/daedalusproject/daedalus-core-docs-develop)
 
 ## Manal Install
