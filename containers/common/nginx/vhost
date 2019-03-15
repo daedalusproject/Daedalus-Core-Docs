@@ -2,6 +2,6 @@ server {
     listen 80 default_server;
     root /var/www/daedalus-core-docs;
     location /{
-        index index.html:
+        index index.html;
     }
 }
