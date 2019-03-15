@@ -2,7 +2,7 @@
 apiTitle: Daedalus-Core
 splitSpec: true
 codeSamples: true
-swaggerUI: false
+swaggerUI: true
 travis: true
 repo: daedalusproject/Daedalus-Core-Docs
 oasVersion: 3.0.0

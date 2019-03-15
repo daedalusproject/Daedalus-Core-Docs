@@ -1,0 +1,8 @@
+stages:
+    - build
+
+build_web_deploy:
+    stage: build_base
+    image: daedalusproject/base_node8
+    script:
+        - npm install
