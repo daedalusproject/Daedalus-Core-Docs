@@ -1,8 +1,19 @@
 stages:
+    - test
     - build
 
-build_web_deploy:
+test_deploy:
+    stage: test
+    image: daedalusproject/base_node8
+    script:
+        - npm install
+        - npm test
+
+build_develop_image:
     stage: build
     image: daedalusproject/base_node8
     script:
         - npm install
+        - npm run build
+        - docker build --network=host --no-cache -t daedalus-core-docs-develop -f containers/develop/Dockerfile .
+
