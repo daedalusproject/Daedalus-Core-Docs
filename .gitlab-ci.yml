@@ -1,15 +1,16 @@
 stages:
     - test
     - build
+    - deploy
 
-test_deploy:
+test_redoc:
     stage: test
     image: daedalusproject/base_node8
     script:
         - npm install
         - npm test
 
-build_develop_image:
+build_api_docs:
     stage: build
     image: daedalusproject/base_node8
     script:
@@ -18,4 +19,13 @@ build_develop_image:
     artifacts:
         paths:
         - web_deploy
-        expire_in: 10 minutes
+        expire_in: 5 minutes
+
+
+deploy_develop_image:
+    stage: deploy
+    image: docker:stable
+    script:
+        - ls -lahrt
+     build_api_docs:
+    - build_api_docs
