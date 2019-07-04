@@ -21,10 +21,9 @@ build_api_docs:
         - web_deploy
         expire_in: 5 minutes
 
-
 deploy_develop_image:
     stage: deploy
-    image: docker:stable
+    image: daedalusproject/base_docker:201907020406
     script:
         - IMAGENAME=daedalus-core-docs-develop
         - RELEASEDATE=$(date)
@@ -43,7 +42,7 @@ deploy_develop_image:
 
 deploy_release_image:
     stage: deploy
-    image: docker:stable
+    image: daedalusproject/base_docker:201907020406
     script:
         - IMAGENAME=daedalus-core-docs
         - RELEASEDATE=$(date)
