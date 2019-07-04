@@ -12,7 +12,7 @@ Release Image [![Release Image](https://img.shields.io/badge/docker-latest-blue.
 
 Develop [![Develop](https://img.shields.io/badge/docker-latest-yellow.svg)](https://hub.docker.com/r/daedalusproject/daedalus-core-docs-develop)
 
-## Manal Install
+## Manual Install
 
 1. Install [Node JS](https://nodejs.org/)
 2. Clone repo and run `npm install` in the repo root
