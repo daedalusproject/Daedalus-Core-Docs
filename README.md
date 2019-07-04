@@ -1,13 +1,18 @@
 # Daedalus-Core OpenAPI Specification
-[![Build Status](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs.svg?branch=master)](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs)
+[![pipeline status](https://git.daedalus-project.io/docs/Daedalus-Core-Docs/badges/master/pipeline.svg)](https://git.daedalus-project.io/docs/Daedalus-Core-Docs/commits/master)[![Build Status](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs.svg?branch=master)](https://travis-ci.org/daedalusproject/Daedalus-Core-Docs)
 
 ## Links
 
 - [Reference Documentation (ReDoc)](https://daedalusproject.github.io/Daedalus-Core-Docs/)
 - OpenAPI Raw Files: [JSON](https://daedalusproject.github.io/Daedalus-Core-Docs/openapi.json) [YAML](https://daedalusproject.github.io/Daedalus-Core-Docs/openapi.yaml)
 
-## Working on specification
-### Install
+## Docker Image
+
+Release Image [![Release Image](https://img.shields.io/badge/docker-latest-blue.svg)](https://hub.docker.com/r/daedalusproject/daedalus-core-docs)
+
+Develop [![Develop](https://img.shields.io/badge/docker-latest-yellow.svg)](https://hub.docker.com/r/daedalusproject/daedalus-core-docs-develop)
+
+## Manual Install
 
 1. Install [Node JS](https://nodejs.org/)
 2. Clone repo and run `npm install` in the repo root

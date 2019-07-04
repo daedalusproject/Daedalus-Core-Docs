@@ -25,16 +25,14 @@ post:
         examples:
           '0':
             value:
-              new_user_data:
-                name: "Marvin"
-                surname: "The Robot"
-                email: "marvin@robot.com"
+              name: "Marvin"
+              surname: "The Robot"
+              email: "marvin@robot.com"
           '1':
             value:
-              new_user_data:
-                  name: "John"
-                  surname: "The Ripper"
-                  email: "john@daedalus-project.io"
+              name: "John"
+              surname: "The Ripper"
+              email: "john@daedalus-project.io"
   responses:
     '200':
       description: User has been created
