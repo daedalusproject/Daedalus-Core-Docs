@@ -3233,7 +3233,7 @@
               "examples": {
                 "0": {
                   "value": {
-                    "email": "admin@daedalus-project.io",
+                    "e-mail": "admin@daedalus-project.io",
                     "password": "validPa55word_conTaining_Mul7ple_c:h:a:r;s"
                   }
                 }
@@ -3284,7 +3284,7 @@
                         "session_token": "eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MSwiZXhwIjoxNTM3NzY1MzYwfQ.Rlok8kfLDp3134Frf2RZXqLtB_hRnsRmyLrR8Ni9IfpgdunZSJggiRlwCiCvOAlG0XJUPXLuwF5FP1DcuY3sILUyk0sm_74E_tvGJXrjEaOsbloKCmurmRAvPnrX9PtOqFODO1By-emm0nsnKebz2Mc09b5pmu1wtwI0Qp5SzgeW_-tVyrbANmh2r7FjkuO19ErUU5TnGrjBRURnfIDYEhS6Dd6kwmeqIelEqzkYywHMyaIHvwZaNxn9xO8GFh5Q_ahXp95ZtWkkX904alJlXPPKbp2i42V3ct6CiJC6PfF0UXTCrN7XK3JB8dgc_9gwT1OVK0DuF2UpWCF9eyhRV0BVAMFchLB52lGxzAL5sg3D7uGAED3B9QlSUDddoZbThrJQjxOxQqvWVzE9yJd-Ene92FNIR6OnKp4wXnZU_qFjV-RdhMycPjmdzgZZ71S4Ax1S9BMMxlvSBLiodPo-MxtFlWt2qb49gnXblGf649XML0Jd12-4hY3FzJ54vbOTWRarqQd9wLmlmAZxULk8zF7XMaJy29bCXI53pt5cpm8FsjMY9GubV8GCopj0EvXUJtoaZFgqJsqhAeqHcSd-RHpzLMKL0na04LoOIWQJWfiXe4nfCJDPhZCKV4lCdsScEDTM29L41f4SXTAMZkgPMIyo5G5_PL2U5Jq10iS9_As",
                         "user": {
                           "name": "Admin",
-                          "email": "admin@daedalus-project.io",
+                          "e-mail": "admin@daedalus-project.io",
                           "active": 1,
                           "is_admin": 1,
                           "phone": "",
@@ -3310,7 +3310,7 @@
                         "user": {
                           "name": "John",
                           "surname": "The Ripper",
-                          "email": "john@daedalus-project.io",
+                          "e-mail": "john@daedalus-project.io",
                           "active": 1,
                           "is_admin": 0,
                           "phone": "",
@@ -3448,20 +3448,16 @@
               "examples": {
                 "0": {
                   "value": {
-                    "new_user_data": {
-                      "name": "Marvin",
-                      "surname": "The Robot",
-                      "email": "marvin@robot.com"
-                    }
+                    "name": "Marvin",
+                    "surname": "The Robot",
+                    "email": "marvin@robot.com"
                   }
                 },
                 "1": {
                   "value": {
-                    "new_user_data": {
-                      "name": "John",
-                      "surname": "The Ripper",
-                      "email": "john@daedalus-project.io"
-                    }
+                    "name": "John",
+                    "surname": "The Ripper",
+                    "email": "john@daedalus-project.io"
                   }
                 }
               }
