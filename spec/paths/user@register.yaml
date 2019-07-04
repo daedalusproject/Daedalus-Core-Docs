@@ -27,12 +27,12 @@ post:
             value:
               name: "Marvin"
               surname: "The Robot"
-              email: "marvin@robot.com"
+              e-mail: "marvin@robot.com"
           '1':
             value:
               name: "John"
               surname: "The Ripper"
-              email: "john@daedalus-project.io"
+              e-mail: "john@daedalus-project.io"
   responses:
     '200':
       description: User has been created
@@ -51,7 +51,7 @@ post:
                         type: string
                       auth_token:
                         type: string
-                      email:
+                      e-mail:
                         type: string
                   user:
                     type: object
@@ -78,7 +78,7 @@ post:
                     token: "CtPoEaonht8cH6e5sS23IdGzad8LdbvG"
                 _hidden_data:
                   new_user:
-                    email: "marvin@daedalus-project.io"
+                    e-mail: "marvin@daedalus-project.io"
                     id: 3
                     auth_token: "FNIUcTWuD2QExGrDcg.FbvqwPRg0iOuAd1W/S33S9jizCynW3gzHt6ZkYxLOs2j"
                   user:
